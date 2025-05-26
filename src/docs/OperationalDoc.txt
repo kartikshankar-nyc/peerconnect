@@ -6,6 +6,7 @@ ollama pull nomic-embed-text
 
 ##Operational Steps
 # 1. Scrape Medium to extract contents, and use ollama3.2 to contextualize contents to tone and stories
+cd data_scrape
 python .\scrape_success_stories.py --source medium --max 50 --pages 1
 
 
