@@ -1,0 +1,14 @@
+﻿##Installs
+pip install streamlit requests
+pip install streamlit requests numpy                                                                                                                                                                             
+pip install sentence-transformers faiss-cpu 
+ollama pull nomic-embed-text
+
+##Operational Steps
+# 1. Scrape Medium to extract contents, and use ollama3.2 to contextualize contents to tone and stories
+python .\scrape_success_stories.py --source medium --max 50 --pages 1
+
+
+# 2. Run the streamlit startup app to open streamlit UX in localhost
+streamlit run .\streamlit_app_load.py -- --embed sts
+
