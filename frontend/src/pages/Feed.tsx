@@ -33,14 +33,20 @@ const Feed: React.FC = () => {
     const fetchData = useCallback(async () => {
         try {
             setIsLoading(true)
+            console.log('Fetching data from API...', { isDemoMode: apiService.isRunningDemo() })
             const [postsData, communitiesData] = await Promise.all([
                 apiService.getPosts(),
                 apiService.getCommunities()
             ])
+            console.log('Received data:', { posts: postsData, communities: communitiesData })
+            console.log('Posts is array?', Array.isArray(postsData))
             setPosts(postsData)
             setCommunities(communitiesData)
         } catch (error) {
             console.error('Failed to fetch data:', error)
+            // Set empty arrays as fallback
+            setPosts([])
+            setCommunities([])
         } finally {
             setIsLoading(false)
         }
@@ -56,7 +62,7 @@ const Feed: React.FC = () => {
     }, [isAuthenticated, fetchData])
 
     useEffect(() => {
-        let filtered = posts
+        let filtered = Array.isArray(posts) ? posts : []
 
         // Filter by community
         if (selectedCommunity !== 'all') {
@@ -97,7 +103,7 @@ const Feed: React.FC = () => {
     }
 
     const getHopeThreadsCount = () => {
-        return posts.filter(post => post.empathyPotentialScore >= 0.85).length
+        return Array.isArray(posts) ? posts.filter(post => post.empathyPotentialScore >= 0.85).length : 0
     }
 
     const getSortLabel = (sort: string) => {
@@ -175,7 +181,7 @@ const Feed: React.FC = () => {
                             <div className="flex items-center justify-center space-x-8 text-body-sm text-slate-600">
                                 <span className="flex items-center space-x-2">
                                     <UserGroupIcon className="w-4 h-4" />
-                                    <span className="font-medium">{posts.length} posts</span>
+                                    <span className="font-medium">{Array.isArray(posts) ? posts.length : 0} posts</span>
                                 </span>
                                 <span className="flex items-center space-x-2">
                                     <FireIcon className="w-4 h-4 text-amber-500" />
@@ -240,7 +246,7 @@ const Feed: React.FC = () => {
                                                     : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-transparent'
                                                     }`}
                                             >
-                                                All Communities ({posts.length})
+                                                All Communities ({Array.isArray(posts) ? posts.length : 0})
                                             </button>
                                             {communities.map((community) => (
                                                 <button
@@ -251,7 +257,7 @@ const Feed: React.FC = () => {
                                                         : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-transparent'
                                                         }`}
                                                 >
-                                                    {community.name} ({posts.filter(p => p.communityId === community.id).length})
+                                                    {community.name} ({Array.isArray(posts) ? posts.filter(p => p.communityId === community.id).length : 0})
                                                 </button>
                                             ))}
                                         </div>

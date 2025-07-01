@@ -31,7 +31,29 @@ interface Community {
 }
 
 export class DemoApiService {
-    private isDemo = !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1');
+    private isDemo = this.detectDemoMode();
+
+    private detectDemoMode(): boolean {
+        // Check if we're on GitHub Pages (production) or localhost without backend
+        const hostname = window.location.hostname;
+        const isGitHubPages = hostname.includes('github.io');
+        const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1');
+
+        // Always use demo mode on GitHub Pages
+        if (isGitHubPages) {
+            return true;
+        }
+
+        // On localhost, try to detect if backend is available
+        if (isLocalhost) {
+            // For now, assume demo mode is needed if we can't reach the backend
+            // This will be handled by the fallback logic in apiService
+            return false;
+        }
+
+        // Default to demo mode for other production environments
+        return true;
+    }
 
     private demoUser: User = {
         id: 'demo-user-1',
