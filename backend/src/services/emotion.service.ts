@@ -23,6 +23,10 @@ export class EmotionService {
         determination: ['determined', 'strong', 'persevere', 'fight', 'overcome']
     };
 
+    async analyzeContent(content: string): Promise<EmotionAnalysis> {
+        return this.analyzeEmotion(content);
+    }
+
     async analyzeEmotion(content: string): Promise<EmotionAnalysis> {
         const text = content.toLowerCase();
         const emotions: { [emotion: string]: number } = {};

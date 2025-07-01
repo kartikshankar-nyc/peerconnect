@@ -2,6 +2,7 @@
     "name": "peernexus-frontend",
     "version": "1.0.0",
     "description": "Frontend for PeerNexus",
+    "type": "module",
     "private": true,
     "scripts": {
         "dev": "vite",
