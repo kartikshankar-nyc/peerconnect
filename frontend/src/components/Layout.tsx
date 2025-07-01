@@ -43,7 +43,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const navigation = [
         { name: 'Home', href: '/', icon: HomeIcon },
         { name: 'Feed', href: '/feed', icon: RectangleStackIcon, requiresAuth: true },
-        { name: 'Create Post', href: '/create-post', icon: PlusIcon, requiresAuth: true },
+        { name: 'Create Post', href: '/create', icon: PlusIcon, requiresAuth: true },
         { name: 'Profile', href: '/profile', icon: UserIcon, requiresAuth: true },
     ];
 

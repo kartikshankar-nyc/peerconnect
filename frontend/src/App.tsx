@@ -9,9 +9,12 @@ import Community from './pages/Community';
 import Profile from './pages/Profile';
 
 function App() {
+    // Use basename for GitHub Pages deployment
+    const basename = process.env.NODE_ENV === 'production' ? '/peernexus' : '';
+
     return (
         <AuthProvider>
-            <Router>
+            <Router basename={basename}>
                 <div className="min-h-screen bg-gray-50">
                     <Layout>
                         <Routes>
