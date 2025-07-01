@@ -44,11 +44,10 @@ export class DemoApiService {
             return true;
         }
 
-        // On localhost, try to detect if backend is available
+        // On localhost, default to demo mode for easy development
+        // The apiService will handle fallback logic if real API is needed
         if (isLocalhost) {
-            // For now, assume demo mode is needed if we can't reach the backend
-            // This will be handled by the fallback logic in apiService
-            return false;
+            return true;
         }
 
         // Default to demo mode for other production environments

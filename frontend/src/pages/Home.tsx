@@ -229,8 +229,8 @@ const Home: React.FC = () => {
                                             <div key={index} className="group">
                                                 <div className="flex items-start space-x-4 p-5 rounded-2xl bg-gradient-to-r from-neutral-50 to-white hover:from-blue-50 hover:to-emerald-50 transition-all duration-300 border border-neutral-100 hover:border-blue-200 hover:shadow-md">
                                                     <div className={`w-3 h-3 rounded-full mt-3 shadow-sm ${activity.type === 'post' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
-                                                            activity.type === 'support' ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
-                                                                activity.type === 'join' ? 'bg-gradient-to-r from-purple-500 to-violet-600' : 'bg-gradient-to-r from-orange-500 to-red-500'
+                                                        activity.type === 'support' ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
+                                                            activity.type === 'join' ? 'bg-gradient-to-r from-purple-500 to-violet-600' : 'bg-gradient-to-r from-orange-500 to-red-500'
                                                         }`}></div>
                                                     <div className="flex-1">
                                                         <p className="text-body-md text-neutral-900 mb-1 group-hover:text-blue-700 transition-colors duration-300">{activity.action}</p>
@@ -352,10 +352,12 @@ const Home: React.FC = () => {
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center animate-fade-in">
-                        {/* Demo Badge */}
-                        <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-primary text-white text-sm font-semibold mb-8 shadow-lg">
-                            <SparklesIcon className="w-4 h-4 mr-2" />
-                            Demo Mode - Experience Anonymous Support
+                        {/* Demo Badge - Enhanced and more prominent */}
+                        <div className="inline-flex items-center px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 text-white text-base font-bold mb-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                            <SparklesIcon className="w-5 h-5 mr-3 animate-pulse" />
+                            <span className="text-white">Demo Mode</span>
+                            <span className="mx-2 text-white/80">•</span>
+                            <span className="text-white/90">Experience Anonymous Support</span>
                         </div>
 
                         {/* Main Headline */}
