@@ -9,7 +9,7 @@ import {
     CheckCircleIcon,
     UserGroupIcon
 } from '@heroicons/react/24/outline';
-import { Community, apiService } from '../services/api';
+import { Community, apiService } from '../services/apiService';
 import { useAuth } from '../contexts/AuthContext';
 import AuthModal from '../components/AuthModal';
 
@@ -39,7 +39,8 @@ const CreatePost: React.FC = () => {
             }
         };
 
-        if (isAuthenticated) {
+        // Always fetch communities in demo mode, only require auth for real API
+        if (isAuthenticated || apiService.isRunningDemo()) {
             fetchCommunities();
         } else {
             setIsLoading(false);
@@ -58,7 +59,7 @@ const CreatePost: React.FC = () => {
         setIsSubmitting(true);
 
         try {
-            await apiService.createPost(content, selectedCommunity);
+            await apiService.createPost({ content: content.trim(), communityId: selectedCommunity });
             navigate('/feed');
         } catch (error) {
             console.error('Failed to create post:', error);
@@ -75,8 +76,8 @@ const CreatePost: React.FC = () => {
     const minWords = 10;
     const isValidPost = content.trim().length > 0 && wordCount >= minWords && selectedCommunity;
 
-    // Show authentication prompt for unauthenticated users
-    if (!isAuthenticated) {
+    // Show authentication prompt for unauthenticated users (but not in demo mode)
+    if (!isAuthenticated && !apiService.isRunningDemo()) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center py-12">
                 <div className="max-w-md mx-auto px-4">
@@ -167,8 +168,8 @@ const CreatePost: React.FC = () => {
                                             <h3 className="text-heading-sm text-neutral-900 mb-2">{community.name}</h3>
                                             <p className="text-body-sm text-neutral-600 mb-3">{community.description}</p>
                                             <div className="flex items-center space-x-4 text-caption text-neutral-500">
-                                                <span>{community.member_count} members</span>
-                                                <span>{community.post_count} posts</span>
+                                                <span>{community.memberCount} members</span>
+                                                <span>💬 {community.category}</span>
                                             </div>
                                         </button>
                                     ))}

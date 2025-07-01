@@ -11,7 +11,7 @@ import {
     HeartIcon as HeartIconSolid,
     StarIcon as StarIconSolid
 } from '@heroicons/react/24/solid';
-import { Post } from '../services/api'
+import { Post } from '../services/apiService'
 
 interface PostCardProps {
     post: Post
@@ -35,15 +35,22 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
         const emotionMap: { [key: string]: string } = {
             'overwhelmed': 'text-red-700 bg-red-100 border-red-200',
             'lonely': 'text-indigo-700 bg-indigo-100 border-indigo-200',
+            'loneliness': 'text-indigo-700 bg-indigo-100 border-indigo-200',
             'hopeful': 'text-blue-700 bg-blue-100 border-blue-200',
+            'hope': 'text-blue-700 bg-blue-100 border-blue-200',
             'anxious': 'text-orange-700 bg-orange-100 border-orange-200',
+            'anxiety': 'text-orange-700 bg-orange-100 border-orange-200',
             'proud': 'text-purple-700 bg-purple-100 border-purple-200',
             'grateful': 'text-emerald-700 bg-emerald-100 border-emerald-200',
+            'gratitude': 'text-emerald-700 bg-emerald-100 border-emerald-200',
             'grief': 'text-slate-700 bg-slate-100 border-slate-200',
+            'sadness': 'text-slate-700 bg-slate-100 border-slate-200',
             'liberated': 'text-teal-700 bg-teal-100 border-teal-200',
             'vulnerable': 'text-pink-700 bg-pink-100 border-pink-200',
             'accomplished': 'text-green-700 bg-green-100 border-green-200',
-            'relieved': 'text-violet-700 bg-violet-100 border-violet-200'
+            'relieved': 'text-violet-700 bg-violet-100 border-violet-200',
+            'joy': 'text-yellow-700 bg-yellow-100 border-yellow-200',
+            'determination': 'text-green-700 bg-green-100 border-green-200'
         };
         return emotionMap[emotion.toLowerCase()] || 'text-slate-700 bg-slate-100 border-slate-200';
     };
@@ -58,7 +65,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
         return `${Math.floor(diffInHours / 24)}d ago`;
     };
 
-    const empathyInfo = post.emotions ? getEmpathyLevel(post.emotions.empathy_potential) : null;
+    const empathyInfo = getEmpathyLevel(post.empathyPotentialScore);
 
     const shouldTruncate = post.content.length > 280;
     const displayContent = shouldTruncate && !isExpanded
@@ -81,7 +88,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                     <div className="relative">
                         <div className="w-8pt-5 h-8pt-5 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm">
                             <span className="text-white font-semibold text-body-sm">
-                                {post.author.anonymous_id.charAt(0).toUpperCase()}
+                                {post.authorName.charAt(0).toUpperCase()}
                             </span>
                         </div>
                         <div className="absolute -bottom-1 -right-1 w-8pt-2 h-8pt-2 bg-white rounded-full flex items-center justify-center shadow-sm">
@@ -93,18 +100,18 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-8pt-1">
                             <h3 className="text-body-md font-semibold text-neutral-900 truncate">
-                                {post.author.anonymous_id}
+                                {post.authorName}
                             </h3>
                             <span className="text-neutral-400">•</span>
                             <time className="text-body-sm text-neutral-500 flex-shrink-0">
-                                {formatTimeAgo(post.created_at)}
+                                {formatTimeAgo(post.createdAt)}
                             </time>
                         </div>
 
                         {/* Community Badge */}
                         {communityName && (
                             <button
-                                onClick={() => onCommunityFilter?.(post.community_id)}
+                                onClick={() => onCommunityFilter?.(post.communityId)}
                                 className="inline-flex items-center mt-8pt-1 px-8pt-1 py-0.5 rounded-full text-caption font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors duration-200"
                             >
                                 <span className="w-1.5 h-1.5 bg-primary-400 rounded-full mr-1.5"></span>
@@ -144,7 +151,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
             </div>
 
             {/* Emotion Analysis */}
-            {post.emotions && (
+            {post.emotions && Object.keys(post.emotions).length > 0 && (
                 <div className="mb-8pt-4 p-8pt-3 bg-neutral-50 rounded-xl border border-neutral-200">
                     <div className="flex items-center justify-between mb-8pt-3">
                         <h4 className="text-body-sm font-semibold text-neutral-900 flex items-center">
@@ -161,18 +168,18 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         {/* Primary Emotion */}
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-600">Primary Emotion</label>
-                            <div className={`inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${getEmotionColor(post.emotions.primary)}`}>
+                            <div className={`inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${getEmotionColor(post.primaryEmotion)}`}>
                                 <div className="w-2 h-2 bg-current rounded-full mr-2 opacity-60"></div>
-                                <span className="capitalize">{post.emotions.primary}</span>
+                                <span className="capitalize">{post.primaryEmotion}</span>
                             </div>
                         </div>
 
                         {/* Secondary Emotions */}
-                        {post.emotions.secondary.length > 0 && (
+                        {Object.keys(post.emotions).filter(e => e !== post.primaryEmotion).length > 0 && (
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-slate-600">Secondary</label>
                                 <div className="flex flex-wrap gap-2">
-                                    {post.emotions.secondary.map((emotion, index) => (
+                                    {Object.keys(post.emotions).filter(e => e !== post.primaryEmotion).map((emotion, index) => (
                                         <div key={index} className={`inline-flex items-center px-2 py-1 rounded-lg border text-xs font-medium ${getEmotionColor(emotion)}`}>
                                             <div className="w-1.5 h-1.5 bg-current rounded-full mr-1.5 opacity-40"></div>
                                             <span className="capitalize">{emotion}</span>
@@ -189,11 +196,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                                 <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
                                     <div
                                         className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000 ease-out"
-                                        style={{ width: `${Math.round(post.emotions.intensity * 100)}%` }}
+                                        style={{ width: `${Math.round(post.emotions[post.primaryEmotion] * 100)}%` }}
                                     ></div>
                                 </div>
                                 <span className="text-sm font-semibold text-slate-700 min-w-[2.5rem]">
-                                    {Math.round(post.emotions.intensity * 100)}%
+                                    {Math.round(post.emotions[post.primaryEmotion] * 100)}%
                                 </span>
                             </div>
                         </div>
@@ -207,7 +214,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                                     <span>{empathyInfo?.label}</span>
                                 </div>
                                 <span className="text-sm font-semibold text-slate-700">
-                                    {Math.round(post.emotions.empathy_potential * 100)}%
+                                    {Math.round(post.empathyPotentialScore * 100)}%
                                 </span>
                             </div>
                         </div>
@@ -233,7 +240,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         )}
                         <span>Support</span>
                         <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-full">
-                            {post.support_count}
+                            {post.reactions || 0}
                         </span>
                     </button>
 
@@ -242,7 +249,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         <ChatBubbleOvalLeftIcon className="w-5 h-5" />
                         <span>Connect</span>
                         <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-full">
-                            {post.reaction_count}
+                            {Math.floor((post.reactions || 0) * 0.3)}
                         </span>
                     </button>
                 </div>

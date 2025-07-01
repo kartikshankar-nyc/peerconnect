@@ -137,6 +137,78 @@ export class DemoApiService {
             primaryEmotion: 'loneliness',
             empathyPotentialScore: 0.9,
             reactions: 15
+        },
+        {
+            id: 'post-5',
+            authorId: 'user-6',
+            authorName: 'MidnightCreator',
+            content: "Finished my first novel after 3 years of writing alone in my apartment. The journey was incredibly isolating - rejections, self-doubt, the works. But something magical happens when you create something from nothing. To all the creative souls out there fighting the good fight - keep going.",
+            communityId: 'creative-isolation',
+            createdAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(), // 8 hours ago
+            emotions: { accomplishment: 0.8, gratitude: 0.6, hope: 0.7 },
+            primaryEmotion: 'accomplishment',
+            empathyPotentialScore: 0.78,
+            reactions: 23
+        },
+        {
+            id: 'post-6',
+            authorId: 'user-7',
+            authorName: 'CodeAndAnxiety',
+            content: "Hyperfocus kicked in today and I coded for 14 hours straight. Forgot to eat, drink water, or even check my phone. These marathon sessions feel productive but I crash so hard afterward. Anyone else struggle with this cycle?",
+            communityId: 'adhd-support',
+            createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(), // 12 hours ago
+            emotions: { overwhelmed: 0.6, frustration: 0.5, exhaustion: 0.7 },
+            primaryEmotion: 'overwhelmed',
+            empathyPotentialScore: 0.82,
+            reactions: 7
+        },
+        {
+            id: 'post-7',
+            authorId: 'user-8',
+            authorName: 'SecondChances',
+            content: "First week in my new role after being unemployed for 6 months. Imposter syndrome is hitting HARD. Keep waiting for someone to realize they made a mistake hiring me. The fear of starting over again is paralyzing.",
+            communityId: 'career-transition',
+            createdAt: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(), // 18 hours ago
+            emotions: { anxiety: 0.8, fear: 0.7, uncertainty: 0.6 },
+            primaryEmotion: 'anxiety',
+            empathyPotentialScore: 0.88,
+            reactions: 11
+        },
+        {
+            id: 'post-8',
+            authorId: 'user-9',
+            authorName: 'SilentStruggler',
+            content: "Sometimes I feel like I'm drowning and everyone around me is breathing fine. Been three months since my last meaningful conversation with someone who truly gets it. This community is literally keeping me afloat right now.",
+            communityId: 'solo-entrepreneurs',
+            createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+            emotions: { loneliness: 0.9, sadness: 0.7, gratitude: 0.4 },
+            primaryEmotion: 'loneliness',
+            empathyPotentialScore: 0.95,
+            reactions: 28
+        },
+        {
+            id: 'post-9',
+            authorId: 'user-10',
+            authorName: 'DigitalNomadDreams',
+            content: "Moved to Barcelona last month for a fresh start. Language barrier is real, but slowly finding my tribe at local co-working spaces. The sunset from my tiny apartment balcony makes all the uncertainty worth it. Baby steps towards building a new life.",
+            communityId: 'new-city-new-me',
+            createdAt: new Date(Date.now() - 14 * 60 * 60 * 1000).toISOString(), // 14 hours ago
+            emotions: { hope: 0.6, excitement: 0.5, uncertainty: 0.4 },
+            primaryEmotion: 'hope',
+            empathyPotentialScore: 0.65,
+            reactions: 9
+        },
+        {
+            id: 'post-10',
+            authorId: 'user-11',
+            authorName: 'PixelPusher',
+            content: "Gallery rejected my photography series again. 'Too personal, not commercial enough' they said. But these photos are pieces of my soul. How do you balance artistic integrity with the need to actually make a living? Feeling lost between passion and practicality.",
+            communityId: 'creative-isolation',
+            createdAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(), // 20 hours ago
+            emotions: { disappointment: 0.7, frustration: 0.6, uncertainty: 0.8 },
+            primaryEmotion: 'disappointment',
+            empathyPotentialScore: 0.79,
+            reactions: 14
         }
     ];
 

@@ -14,7 +14,7 @@ import {
 } from '@heroicons/react/24/outline'
 import PostCard from '../components/PostCard'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { apiService, Post, Community } from '../services/api'
+import { apiService, Post, Community } from '../services/apiService'
 import { useAuth } from '../contexts/AuthContext'
 import AuthModal from '../components/AuthModal'
 
@@ -47,7 +47,8 @@ const Feed: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        if (isAuthenticated) {
+        // Always fetch data in demo mode, only require auth for real API
+        if (isAuthenticated || apiService.isRunningDemo()) {
             fetchData()
         } else {
             setIsLoading(false)
@@ -59,14 +60,14 @@ const Feed: React.FC = () => {
 
         // Filter by community
         if (selectedCommunity !== 'all') {
-            filtered = filtered.filter(post => post.community_id === selectedCommunity)
+            filtered = filtered.filter(post => post.communityId === selectedCommunity)
         }
 
         // Filter by search query
         if (searchQuery) {
             filtered = filtered.filter(post =>
                 post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                post.author.anonymous_id.toLowerCase().includes(searchQuery.toLowerCase())
+                post.authorName.toLowerCase().includes(searchQuery.toLowerCase())
             )
         }
 
@@ -74,12 +75,12 @@ const Feed: React.FC = () => {
         filtered = [...filtered].sort((a, b) => {
             switch (sortBy) {
                 case 'empathy':
-                    return (b.emotions?.empathy_potential || 0) - (a.emotions?.empathy_potential || 0)
+                    return b.empathyPotentialScore - a.empathyPotentialScore
                 case 'hope':
-                    return (b.emotions?.empathy_potential >= 0.85 ? 1 : 0) - (a.emotions?.empathy_potential >= 0.85 ? 1 : 0)
+                    return (b.empathyPotentialScore >= 0.85 ? 1 : 0) - (a.empathyPotentialScore >= 0.85 ? 1 : 0)
                 case 'recent':
                 default:
-                    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
             }
         })
 
@@ -96,7 +97,7 @@ const Feed: React.FC = () => {
     }
 
     const getHopeThreadsCount = () => {
-        return posts.filter(post => post.emotions && post.emotions.empathy_potential >= 0.85).length
+        return posts.filter(post => post.empathyPotentialScore >= 0.85).length
     }
 
     const getSortLabel = (sort: string) => {
@@ -108,8 +109,8 @@ const Feed: React.FC = () => {
         }
     }
 
-    // Show authentication prompt for unauthenticated users
-    if (!isAuthenticated) {
+    // Show authentication prompt for unauthenticated users (but not in demo mode)
+    if (!isAuthenticated && !apiService.isRunningDemo()) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center py-12">
                 <div className="max-w-md mx-auto px-4">
@@ -250,7 +251,7 @@ const Feed: React.FC = () => {
                                                         : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-transparent'
                                                         }`}
                                                 >
-                                                    {community.name} ({posts.filter(p => p.community_id === community.id).length})
+                                                    {community.name} ({posts.filter(p => p.communityId === community.id).length})
                                                 </button>
                                             ))}
                                         </div>
@@ -358,7 +359,7 @@ const Feed: React.FC = () => {
                                 <PostCard
                                     post={post}
                                     onCommunityFilter={handleCommunityFilter}
-                                    communityName={getCommunityName(post.community_id)}
+                                    communityName={getCommunityName(post.communityId)}
                                 />
                             </div>
                         ))}
