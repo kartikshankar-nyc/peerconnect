@@ -538,7 +538,76 @@
         margin-top: var(--spacing-8);
     }
 
+    /* Width utilities aligned to 8pt grid */
+    .w-8pt-1 {
+        width: var(--spacing-1);
+    }
+
+    .w-8pt-2 {
+        width: var(--spacing-2);
+    }
+
+    .w-8pt-3 {
+        width: var(--spacing-3);
+    }
+
+    .w-8pt-4 {
+        width: var(--spacing-4);
+    }
+
+    .w-8pt-5 {
+        width: var(--spacing-5);
+    }
+
+    .w-8pt-6 {
+        width: var(--spacing-6);
+    }
+
+    .w-8pt-8 {
+        width: var(--spacing-8);
+    }
+
+    .w-8pt-12 {
+        width: var(--spacing-12);
+    }
+
+    .w-8pt-16 {
+        width: var(--spacing-16);
+    }
+
+    .w-8pt-20 {
+        width: var(--spacing-20);
+    }
+
+    .w-8pt-24 {
+        width: var(--spacing-24);
+    }
+
     /* Height utilities aligned to 8pt grid */
+    .h-8pt-1 {
+        height: var(--spacing-1);
+    }
+
+    .h-8pt-2 {
+        height: var(--spacing-2);
+    }
+
+    .h-8pt-3 {
+        height: var(--spacing-3);
+    }
+
+    .h-8pt-4 {
+        height: var(--spacing-4);
+    }
+
+    .h-8pt-5 {
+        height: var(--spacing-5);
+    }
+
+    .h-8pt-6 {
+        height: var(--spacing-6);
+    }
+
     .h-8pt-8 {
         height: var(--spacing-8);
     }
@@ -564,27 +633,6 @@
     }
 
     /* 192px */
-
-    /* Width utilities aligned to 8pt grid */
-    .w-8pt-8 {
-        width: var(--spacing-8);
-    }
-
-    .w-8pt-12 {
-        width: var(--spacing-12);
-    }
-
-    .w-8pt-16 {
-        width: var(--spacing-16);
-    }
-
-    .w-8pt-20 {
-        width: var(--spacing-20);
-    }
-
-    .w-8pt-24 {
-        width: var(--spacing-24);
-    }
 }
 
 /* Keyframe Animations */
@@ -627,6 +675,40 @@
 /* Focus States */
 .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+/* Icon fixes - prevent squished circles and maintain aspect ratio */
+svg {
+    flex-shrink: 0;
+    display: block;
+}
+
+/* Ensure circular elements maintain perfect circles */
+.rounded-full {
+    aspect-ratio: 1 / 1;
+}
+
+/* Ensure square elements stay square */
+.w-4.h-4,
+.w-5.h-5,
+.w-6.h-6,
+.w-8.h-8,
+.w-10.h-10,
+.w-12.h-12 {
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+}
+
+/* Heroicons specific fixes */
+[class*="heroicon"] {
+    flex-shrink: 0;
+    width: auto;
+    height: auto;
+}
+
+/* Avatar and logo containers */
+.flex.items-center.justify-center {
+    flex-shrink: 0;
 }
 
 /* Selection */

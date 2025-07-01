@@ -64,7 +64,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <div className="layout-container flex justify-between items-center">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-8pt-2">
-                        <div className="w-8pt-4 h-8pt-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
                             <span className="text-white font-bold text-lg">P</span>
                         </div>
                         <span className="text-heading-md text-neutral-900 font-bold">PeerNexus</span>

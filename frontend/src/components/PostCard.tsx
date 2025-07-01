@@ -76,7 +76,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
         <article className="card-floating">
             {/* Hope Thread Indicator */}
             {empathyInfo?.level === 'very-high' && (
-                <div className="absolute -top-2 -right-2 w-8pt-4 h-8pt-4 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow-lg">
                     <FireIcon className="w-4 h-4 text-white" />
                 </div>
             )}
@@ -86,13 +86,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                 <div className="flex items-center gap-8pt-2">
                     {/* Avatar */}
                     <div className="relative">
-                        <div className="w-8pt-5 h-8pt-5 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
                             <span className="text-white font-semibold text-body-sm">
                                 {post.authorName.charAt(0).toUpperCase()}
                             </span>
                         </div>
-                        <div className="absolute -bottom-1 -right-1 w-8pt-2 h-8pt-2 bg-white rounded-full flex items-center justify-center shadow-sm">
-                            <div className="w-8pt-1 h-8pt-1 bg-green-400 rounded-full"></div>
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-sm">
+                            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                         </div>
                     </div>
 
