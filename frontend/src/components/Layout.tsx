@@ -19,6 +19,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { useAuth } from '../contexts/AuthContext';
 import AuthModal from './AuthModal';
+import DemoBanner from './DemoBanner';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -55,6 +56,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     return (
         <div className="min-h-screen bg-neutral-50">
+            {/* Demo Banner */}
+            <DemoBanner />
+
             {/* Header - 64px height (8pt grid) */}
             <header className="layout-header bg-white border-b border-neutral-200 sticky top-0 z-50">
                 <div className="layout-container flex justify-between items-center">
