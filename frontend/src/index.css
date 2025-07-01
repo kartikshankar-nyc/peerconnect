@@ -278,6 +278,12 @@
         font-size: var(--text-base);
     }
 
+    .input-premium {
+        @apply input-base border-neutral-200 bg-white;
+        @apply focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+
     /* 8pt Grid Layout System */
     .layout-container {
         @apply max-w-7xl mx-auto;
@@ -362,6 +368,33 @@
 
     .animate-slide-up {
         animation: slideUp 0.3s ease-out;
+    }
+
+    /* Missing Gradient Classes */
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    }
+
+    .text-gradient-primary {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .bg-gradient-accent {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .text-gradient-accent {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .shadow-glow {
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.15), 0 8px 32px rgba(0, 0, 0, 0.1);
     }
 }
 

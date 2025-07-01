@@ -1,82 +1,81 @@
-import { Router } from 'express';
-import { demoDataService } from '../services/demo-data.service';
-
-const router = Router();
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const demo_data_service_1 = require("../services/demo-data.service");
+const router = (0, express_1.Router)();
+const demoService = new demo_data_service_1.DemoDataService();
 // Get all communities
 router.get('/communities', (req, res) => {
     try {
-        const communities = demoDataService.getCommunities();
+        const communities = demoService.getCommunities();
         res.json({
             success: true,
             data: communities
         });
-    } catch (error) {
+    }
+    catch (error) {
         res.status(500).json({
             success: false,
             error: 'Failed to fetch communities'
         });
     }
 });
-
 // Get posts (all or by community)
 router.get('/posts', (req, res) => {
     try {
         const { communityId } = req.query;
-        const posts = demoDataService.getPosts(communityId as string);
+        const posts = demoService.getPosts(communityId);
         res.json({
             success: true,
             data: posts
         });
-    } catch (error) {
+    }
+    catch (error) {
         res.status(500).json({
             success: false,
             error: 'Failed to fetch posts'
         });
     }
 });
-
 // Create a new post
 router.post('/posts', (req, res) => {
     try {
         const { content, communityId, userId = '1' } = req.body;
-
         if (!content || !communityId) {
             return res.status(400).json({
                 success: false,
                 error: 'Content and community ID are required'
             });
         }
-
-        const newPost = demoDataService.createPost(content, communityId, userId);
+        const newPost = demoService.createPost(content, communityId, userId);
         res.status(201).json({
             success: true,
             data: newPost
         });
-    } catch (error) {
+    }
+    catch (error) {
         res.status(500).json({
             success: false,
             error: 'Failed to create post'
         });
     }
 });
-
 // Get users
 router.get('/users', (req, res) => {
     try {
-        const users = demoDataService.getUsers();
+        const users = demoService.getUsers();
         res.json({
             success: true,
             data: users
         });
-    } catch (error) {
+    }
+    catch (error) {
         res.status(500).json({
             success: false,
             error: 'Failed to fetch users'
         });
     }
 });
-
 // Create anonymous user (demo)
 router.post('/users/anonymous', (req, res) => {
     try {
@@ -88,17 +87,17 @@ router.post('/users/anonymous', (req, res) => {
             interactionScore: Math.floor(Math.random() * 40) + 60,
             createdAt: new Date().toISOString()
         };
-
         res.status(201).json({
             success: true,
             data: demoUser
         });
-    } catch (error) {
+    }
+    catch (error) {
         res.status(500).json({
             success: false,
             error: 'Failed to create anonymous user'
         });
     }
 });
-
-export default router; 
+exports.default = router;
+//# sourceMappingURL=demo.routes.js.map
