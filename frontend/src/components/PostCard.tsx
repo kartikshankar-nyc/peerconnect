@@ -23,6 +23,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
     const [isLiked, setIsLiked] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [showShareConfirmation, setShowShareConfirmation] = useState(false);
 
     const getEmpathyLevel = (score: number) => {
         if (score >= 0.9) return { level: 'very-high', label: 'Hope Thread', color: 'text-amber-700 bg-amber-100 border-amber-200' };
@@ -65,6 +66,37 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
         return `${Math.floor(diffInHours / 24)}d ago`;
     };
 
+    const handleShare = async () => {
+        const shareText = `"${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}" - Shared from PeerNexus Community\n\nJoin the conversation at ${window.location.origin}`;
+
+        try {
+            if (navigator.share) {
+                // Use native share API if available (mobile devices)
+                await navigator.share({
+                    title: `Post by ${post.authorName}`,
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback to clipboard
+                await navigator.clipboard.writeText(shareText);
+                setShowShareConfirmation(true);
+                setTimeout(() => setShowShareConfirmation(false), 2000);
+            }
+        } catch (error) {
+            console.error('Error sharing:', error);
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = shareText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            setShowShareConfirmation(true);
+            setTimeout(() => setShowShareConfirmation(false), 2000);
+        }
+    };
+
     const empathyInfo = getEmpathyLevel(post.empathyPotentialScore);
 
     const shouldTruncate = post.content.length > 280;
@@ -86,13 +118,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                 <div className="flex items-center gap-8pt-2">
                     {/* Avatar */}
                     <div className="relative">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
-                            <span className="text-white font-semibold text-body-sm">
+                        <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+                            <span className="text-white font-semibold text-sm">
                                 {post.authorName.charAt(0).toUpperCase()}
                             </span>
                         </div>
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-sm">
-                            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-white rounded-full flex items-center justify-center shadow-sm">
+                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
                         </div>
                     </div>
 
@@ -110,13 +142,10 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
 
                         {/* Community Badge */}
                         {communityName && (
-                            <button
-                                onClick={() => onCommunityFilter?.(post.communityId)}
-                                className="inline-flex items-center mt-8pt-1 px-8pt-1 py-0.5 rounded-full text-caption font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors duration-200"
-                            >
-                                <span className="w-1.5 h-1.5 bg-primary-400 rounded-full mr-1.5"></span>
+                            <div className="inline-flex items-center mt-1 px-3 py-1 rounded-lg text-xs font-medium bg-primary-50 text-primary-700 border border-primary-200">
+                                <span className="w-1.5 h-1.5 bg-primary-400 rounded-full mr-2"></span>
                                 {communityName}
-                            </button>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -164,10 +193,10 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8pt-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {/* Primary Emotion */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-600">Primary Emotion</label>
+                        <div>
+                            <label className="text-sm font-medium text-slate-600 block mb-3">Primary Emotion</label>
                             <div className={`inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${getEmotionColor(post.primaryEmotion)}`}>
                                 <div className="w-2 h-2 bg-current rounded-full mr-2 opacity-60"></div>
                                 <span className="capitalize">{post.primaryEmotion}</span>
@@ -176,8 +205,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
 
                         {/* Secondary Emotions */}
                         {Object.keys(post.emotions).filter(e => e !== post.primaryEmotion).length > 0 && (
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-600">Secondary</label>
+                            <div>
+                                <label className="text-sm font-medium text-slate-600 block mb-3">Secondary</label>
                                 <div className="flex flex-wrap gap-2">
                                     {Object.keys(post.emotions).filter(e => e !== post.primaryEmotion).map((emotion, index) => (
                                         <div key={index} className={`inline-flex items-center px-2 py-1 rounded-lg border text-xs font-medium ${getEmotionColor(emotion)}`}>
@@ -190,8 +219,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         )}
 
                         {/* Intensity */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-600">Intensity</label>
+                        <div>
+                            <label className="text-sm font-medium text-slate-600 block mb-3">Intensity</label>
                             <div className="flex items-center space-x-3">
                                 <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
                                     <div
@@ -206,8 +235,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         </div>
 
                         {/* Empathy Potential */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-600">Empathy Potential</label>
+                        <div>
+                            <label className="text-sm font-medium text-slate-600 block mb-3">Empathy Potential</label>
                             <div className="flex items-center space-x-3">
                                 <div className={`flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${empathyInfo?.color}`}>
                                     <FireIcon className="w-4 h-4 mr-2" />
@@ -239,7 +268,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                             <HeartIcon className="w-5 h-5" />
                         )}
                         <span>Support</span>
-                        <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-full">
+                        <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-md">
                             {post.reactions || 0}
                         </span>
                     </button>
@@ -248,17 +277,30 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                     <button className="flex items-center space-x-2 px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-all duration-200">
                         <ChatBubbleOvalLeftIcon className="w-5 h-5" />
                         <span>Connect</span>
-                        <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-full">
+                        <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-md">
                             {Math.floor((post.reactions || 0) * 0.3)}
                         </span>
                     </button>
                 </div>
 
                 {/* Share Button */}
-                <button className="flex items-center space-x-2 px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 transition-all duration-200">
-                    <ShareIcon className="w-5 h-5" />
-                    <span className="hidden sm:inline">Share</span>
-                </button>
+                <div className="relative">
+                    <button
+                        onClick={handleShare}
+                        className="flex items-center space-x-2 px-3 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-50 hover:text-emerald-600 transition-all duration-200"
+                    >
+                        <ShareIcon className="w-5 h-5" />
+                        <span className="hidden sm:inline">Share</span>
+                    </button>
+
+                    {/* Share Confirmation */}
+                    {showShareConfirmation && (
+                        <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-emerald-600 text-white text-xs rounded-lg shadow-lg whitespace-nowrap">
+                            Copied to clipboard!
+                            <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-emerald-600"></div>
+                        </div>
+                    )}
+                </div>
             </footer>
         </article>
     );

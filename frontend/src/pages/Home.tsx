@@ -495,19 +495,17 @@ const Home: React.FC = () => {
             </section>
 
             {/* Communities Preview - Static data, no loading states */}
-            <section className="py-32 bg-gradient-to-br from-neutral-50 to-blue-50/30">
+            <section className="py-20 md:py-28" id="communities">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16 animate-fade-in">
-                        <h2 className="text-display-md text-neutral-900 mb-6">
-                            Featured <span className="text-gradient-accent">Communities</span>
-                        </h2>
-                        <p className="text-body-lg text-neutral-600 max-w-2xl mx-auto">
-                            Join supportive groups tailored to your unique experiences and challenges.
+                    <div className="text-center mb-12">
+                        <h2 className="text-display-md text-neutral-900">Find Your Circle</h2>
+                        <p className="text-body-lg text-neutral-600 max-w-3xl mx-auto">
+                            You're not alone. Join a community that understands. Safe, anonymous, and supportive.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 animate-stagger">
-                        {featuredCommunities.map((community, index) => (
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {featuredCommunities.map((community) => (
                             <div key={community.id} className="card-floating p-6 text-center group">
                                 <div className="w-16 h-16 bg-gradient-accent rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-glow transition-all duration-300">
                                     <UserGroupIcon className="w-8 h-8 text-white" />
@@ -532,15 +530,6 @@ const Home: React.FC = () => {
                                 </button>
                             </div>
                         ))}
-                    </div>
-
-                    <div className="text-center mt-12 animate-slide-up">
-                        <button
-                            onClick={() => setShowAuthModal(true)}
-                            className="btn-primary px-8 py-3"
-                        >
-                            Get Started Today
-                        </button>
                     </div>
                 </div>
             </section>

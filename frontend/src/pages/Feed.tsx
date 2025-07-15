@@ -121,8 +121,8 @@ const Feed: React.FC = () => {
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center py-12">
                 <div className="max-w-md mx-auto px-4">
                     <div className="card-premium p-8 text-center">
-                        <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                            <UserGroupIcon className="w-10 h-10 text-white" />
+                        <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <UserGroupIcon className="w-8 h-8 text-white" />
                         </div>
 
                         <h2 className="text-heading-lg text-slate-900 mb-4">
@@ -338,8 +338,8 @@ const Feed: React.FC = () => {
                 {/* Posts Grid */}
                 {filteredPosts.length === 0 ? (
                     <div className="text-center py-16">
-                        <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                            <UserIcon className="w-12 h-12 text-slate-400" />
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <UserIcon className="w-8 h-8 text-slate-400" />
                         </div>
                         <h3 className="text-xl font-semibold text-slate-900 mb-3">No posts found</h3>
                         <p className="text-slate-600 max-w-md mx-auto mb-6">
