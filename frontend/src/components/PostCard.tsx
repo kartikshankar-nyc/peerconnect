@@ -12,6 +12,7 @@ import {
     StarIcon as StarIconSolid
 } from '@heroicons/react/24/solid';
 import { Post } from '../services/apiService'
+import { ExclamationTriangleIcon, TrophyIcon } from '@heroicons/react/24/outline';
 
 interface PostCardProps {
     post: Post
@@ -54,6 +55,46 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
             'determination': 'text-green-700 bg-green-100 border-green-200'
         };
         return emotionMap[emotion.toLowerCase()] || 'text-slate-700 bg-slate-100 border-slate-200';
+    };
+
+    const getSupportTypeColor = (type: string) => {
+        const typeMap: { [key: string]: string } = {
+            'comfort': 'text-blue-700 bg-blue-100 border-blue-200',
+            'energy': 'text-orange-700 bg-orange-100 border-orange-200',
+            'clarity': 'text-purple-700 bg-purple-100 border-purple-200',
+            'solidarity': 'text-emerald-700 bg-emerald-100 border-emerald-200'
+        };
+        return typeMap[type.toLowerCase()] || 'text-slate-700 bg-slate-100 border-slate-200';
+    };
+
+    const getSupportTypeIcon = (type: string) => {
+        const iconMap: { [key: string]: string } = {
+            'comfort': 'bg-blue-400',
+            'energy': 'bg-orange-400',
+            'clarity': 'bg-purple-400',
+            'solidarity': 'bg-emerald-400'
+        };
+        return iconMap[type.toLowerCase()] || 'bg-slate-400';
+    };
+
+    const getContextColor = (context: string) => {
+        const contextMap: { [key: string]: string } = {
+            'sharing': 'text-blue-700 bg-blue-100 border-blue-200',
+            'seeking': 'text-amber-700 bg-amber-100 border-amber-200',
+            'reflecting': 'text-indigo-700 bg-indigo-100 border-indigo-200',
+            'celebrating': 'text-green-700 bg-green-100 border-green-200'
+        };
+        return contextMap[context.toLowerCase()] || 'text-slate-700 bg-slate-100 border-slate-200';
+    };
+
+    const getContextIcon = (context: string) => {
+        const iconMap: { [key: string]: string } = {
+            'sharing': 'bg-blue-400',
+            'seeking': 'bg-amber-400',
+            'reflecting': 'bg-indigo-400',
+            'celebrating': 'bg-green-400'
+        };
+        return iconMap[context.toLowerCase()] || 'bg-slate-400';
     };
 
     const formatTimeAgo = (dateString: string) => {
@@ -218,6 +259,24 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                             </div>
                         )}
 
+                        {/* Support Type Needed */}
+                        <div>
+                            <label className="text-sm font-medium text-slate-600 block mb-3">Support Type</label>
+                            <div className={`inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${getSupportTypeColor((post.emotions as any).support_type || 'comfort')}`}>
+                                <div className={`w-2 h-2 rounded-full mr-2 ${getSupportTypeIcon((post.emotions as any).support_type || 'comfort')}`}></div>
+                                <span className="capitalize">{(post.emotions as any).support_type || 'comfort'}</span>
+                            </div>
+                        </div>
+
+                        {/* Context */}
+                        <div>
+                            <label className="text-sm font-medium text-slate-600 block mb-3">Context</label>
+                            <div className={`inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${getContextColor((post.emotions as any).context || 'sharing')}`}>
+                                <div className={`w-2 h-2 rounded-full mr-2 ${getContextIcon((post.emotions as any).context || 'sharing')}`}></div>
+                                <span className="capitalize">{(post.emotions as any).context || 'sharing'}</span>
+                            </div>
+                        </div>
+
                         {/* Intensity */}
                         <div>
                             <label className="text-sm font-medium text-slate-600 block mb-3">Intensity</label>
@@ -228,7 +287,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                                         style={{ width: `${Math.round(post.emotions[post.primaryEmotion] * 100)}%` }}
                                     ></div>
                                 </div>
-                                <span className="text-sm font-semibold text-slate-700 min-w-[2.5rem]">
+                                <span className="text-xs font-medium text-slate-600 min-w-[3rem]">
                                     {Math.round(post.emotions[post.primaryEmotion] * 100)}%
                                 </span>
                             </div>
@@ -238,16 +297,52 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         <div>
                             <label className="text-sm font-medium text-slate-600 block mb-3">Empathy Potential</label>
                             <div className="flex items-center space-x-3">
-                                <div className={`flex items-center px-3 py-2 rounded-lg border text-sm font-medium ${empathyInfo?.color}`}>
-                                    <FireIcon className="w-4 h-4 mr-2" />
-                                    <span>{empathyInfo?.label}</span>
+                                <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full transition-all duration-1000 ease-out"
+                                        style={{ width: `${Math.round(post.empathyPotentialScore * 100)}%` }}
+                                    ></div>
                                 </div>
-                                <span className="text-sm font-semibold text-slate-700">
+                                <span className="text-xs font-medium text-slate-600 min-w-[3rem]">
                                     {Math.round(post.empathyPotentialScore * 100)}%
                                 </span>
                             </div>
                         </div>
                     </div>
+
+                    {/* Crisis Indicators */}
+                    {(post.emotions as any).crisis_indicators && Array.isArray((post.emotions as any).crisis_indicators) && (post.emotions as any).crisis_indicators.length > 0 && (
+                        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                            <div className="flex items-center mb-2">
+                                <ExclamationTriangleIcon className="w-4 h-4 text-red-600 mr-2" />
+                                <span className="text-sm font-medium text-red-800">Crisis Support Available</span>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                                {(post.emotions as any).crisis_indicators.map((indicator: string, index: number) => (
+                                    <span key={index} className="text-xs px-2 py-1 bg-red-100 text-red-700 rounded">
+                                        {indicator}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Progress Indicators */}
+                    {(post.emotions as any).progress_indicators && Array.isArray((post.emotions as any).progress_indicators) && (post.emotions as any).progress_indicators.length > 0 && (
+                        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                            <div className="flex items-center mb-2">
+                                <TrophyIcon className="w-4 h-4 text-green-600 mr-2" />
+                                <span className="text-sm font-medium text-green-800">Progress Recognized</span>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                                {(post.emotions as any).progress_indicators.map((indicator: string, index: number) => (
+                                    <span key={index} className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">
+                                        {indicator}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 

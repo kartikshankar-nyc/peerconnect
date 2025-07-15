@@ -8,6 +8,7 @@ import {
     SparklesIcon,
     ArrowRightOnRectangleIcon,
     RectangleStackIcon,
+    BookOpenIcon,
     Bars3Icon,
     XMarkIcon
 } from '@heroicons/react/24/outline';
@@ -15,7 +16,8 @@ import {
     HomeIcon as HomeIconSolid,
     PlusIcon as PlusIconSolid,
     UserIcon as UserIconSolid,
-    ChatBubbleLeftRightIcon as ChatBubbleLeftRightIconSolid
+    ChatBubbleLeftRightIcon as ChatBubbleLeftRightIconSolid,
+    BookOpenIcon as BookOpenIconSolid
 } from '@heroicons/react/24/solid';
 import { useAuth } from '../contexts/AuthContext';
 import AuthModal from './AuthModal';
@@ -45,6 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         { name: 'Feed', href: '/feed', icon: RectangleStackIcon, requiresAuth: true },
         { name: 'Create Post', href: '/create', icon: PlusIcon, requiresAuth: true },
         { name: 'Profile', href: '/profile', icon: UserIcon, requiresAuth: true },
+        { name: 'Diary', href: '/diary', icon: BookOpenIcon, requiresAuth: true },
     ];
 
     const handleAuthRequiredClick = (e: React.MouseEvent, requiresAuth: boolean) => {

@@ -1,4 +1,4 @@
-// Demo Data Service - Provides synthetic data for PeerNexus demo
+// Demo Data Service - Provides synthetic data for IsolationDiaries demo
 export interface DemoUser {
     id: string;
     anonymous_id: string;
@@ -12,6 +12,12 @@ export interface DemoEmotion {
     secondary: string[];
     intensity: number;
     empathy_potential: number;
+    support_type: 'comfort' | 'energy' | 'clarity' | 'solidarity';
+    crisis_indicators: string[];
+    progress_indicators: string[];
+    context: 'sharing' | 'seeking' | 'reflecting' | 'celebrating';
+    emotional_complexity: number;
+    all_emotions: { [emotion: string]: number };
 }
 
 export interface DemoPost {
@@ -95,7 +101,17 @@ Some days I wonder if I'm cut out for this, but then I remember why I started. S
                 primary: 'overwhelmed',
                 secondary: ['lonely', 'anxious'],
                 intensity: 0.78,
-                empathy_potential: 0.92
+                empathy_potential: 0.92,
+                support_type: 'comfort',
+                crisis_indicators: ['anxiety', 'decision fatigue'],
+                progress_indicators: ['daily routine', 'self-care'],
+                context: 'sharing',
+                emotional_complexity: 0.85,
+                all_emotions: {
+                    overwhelmed: 0.78,
+                    lonely: 0.78,
+                    anxious: 0.78
+                }
             },
             community_id: 'solo-entrepreneurs',
             reaction_count: 23,
@@ -120,7 +136,17 @@ The game changer was realizing I don't need to be "normal" - I need to work WITH
                 primary: 'accomplished',
                 secondary: ['hopeful', 'proud'],
                 intensity: 0.65,
-                empathy_potential: 0.85
+                empathy_potential: 0.85,
+                support_type: 'energy',
+                crisis_indicators: [],
+                progress_indicators: ['ADHD management system'],
+                context: 'sharing',
+                emotional_complexity: 0.75,
+                all_emotions: {
+                    accomplished: 0.65,
+                    hopeful: 0.65,
+                    proud: 0.65
+                }
             },
             community_id: 'adhd-support',
             reaction_count: 31,
@@ -145,7 +171,17 @@ Taking it one day at a time. Some days are good, some aren't. Today was okay.`,
                 primary: 'grief',
                 secondary: ['vulnerable', 'hopeful'],
                 intensity: 0.82,
-                empathy_potential: 0.96
+                empathy_potential: 0.96,
+                support_type: 'comfort',
+                crisis_indicators: ['loss', 'uncertainty'],
+                progress_indicators: ['daily routine', 'self-care'],
+                context: 'seeking',
+                emotional_complexity: 0.90,
+                all_emotions: {
+                    grief: 0.82,
+                    vulnerable: 0.82,
+                    hopeful: 0.82
+                }
             },
             community_id: 'relationship-rebuilders',
             reaction_count: 18,
@@ -170,7 +206,17 @@ For anyone else struggling with this - it really does take time. I was starting 
                 primary: 'grateful',
                 secondary: ['relieved', 'hopeful'],
                 intensity: 0.71,
-                empathy_potential: 0.74
+                empathy_potential: 0.74,
+                support_type: 'solidarity',
+                crisis_indicators: [],
+                progress_indicators: ['finding community'],
+                context: 'sharing',
+                emotional_complexity: 0.70,
+                all_emotions: {
+                    grateful: 0.71,
+                    relieved: 0.71,
+                    hopeful: 0.71
+                }
             },
             community_id: 'new-city-new-me',
             reaction_count: 42,
@@ -195,7 +241,17 @@ This transition is teaching me so much about myself. I'm more resilient than I t
                 primary: 'liberated',
                 secondary: ['anxious', 'proud'],
                 intensity: 0.69,
-                empathy_potential: 0.79
+                empathy_potential: 0.79,
+                support_type: 'energy',
+                crisis_indicators: [],
+                progress_indicators: ['freelancing', 'time management'],
+                context: 'celebrating',
+                emotional_complexity: 0.75,
+                all_emotions: {
+                    liberated: 0.69,
+                    anxious: 0.69,
+                    proud: 0.69
+                }
             },
             community_id: 'career-transition',
             reaction_count: 27,
@@ -220,7 +276,17 @@ Still need strategies and support, but now I'm working WITH my brain instead of 
                 primary: 'proud',
                 secondary: ['relieved', 'accomplished'],
                 intensity: 0.73,
-                empathy_potential: 0.88
+                empathy_potential: 0.88,
+                support_type: 'solidarity',
+                crisis_indicators: [],
+                progress_indicators: ['ADHD understanding', 'strategies'],
+                context: 'celebrating',
+                emotional_complexity: 0.80,
+                all_emotions: {
+                    proud: 0.73,
+                    relieved: 0.73,
+                    accomplished: 0.73
+                }
             },
             community_id: 'adhd-support',
             reaction_count: 38,
@@ -245,7 +311,17 @@ To other solo founders considering this step: if you can afford it, do it. Even 
                 primary: 'relieved',
                 secondary: ['grateful', 'hopeful'],
                 intensity: 0.76,
-                empathy_potential: 0.81
+                empathy_potential: 0.81,
+                support_type: 'solidarity',
+                crisis_indicators: [],
+                progress_indicators: ['team', 'business growth'],
+                context: 'celebrating',
+                emotional_complexity: 0.78,
+                all_emotions: {
+                    relieved: 0.76,
+                    grateful: 0.76,
+                    hopeful: 0.76
+                }
             },
             community_id: 'solo-entrepreneurs',
             reaction_count: 33,
@@ -270,7 +346,17 @@ I think I need more time to figure out who I am on my own before I try to be hal
                 primary: 'vulnerable',
                 secondary: ['anxious', 'hopeful'],
                 intensity: 0.71,
-                empathy_potential: 0.87
+                empathy_potential: 0.87,
+                support_type: 'comfort',
+                crisis_indicators: ['uncertainty', 'fear of commitment'],
+                progress_indicators: ['dating process', 'self-awareness'],
+                context: 'seeking',
+                emotional_complexity: 0.85,
+                all_emotions: {
+                    vulnerable: 0.71,
+                    anxious: 0.71,
+                    hopeful: 0.71
+                }
             },
             community_id: 'relationship-rebuilders',
             reaction_count: 22,
@@ -379,7 +465,13 @@ I think I need more time to figure out who I am on my own before I try to be hal
             primary,
             secondary,
             intensity: Math.random() * 0.4 + 0.6, // 0.6 to 1.0
-            empathy_potential: Math.random() * 0.4 + 0.6 // 0.6 to 1.0
+            empathy_potential: Math.random() * 0.4 + 0.6, // 0.6 to 1.0
+            support_type: 'comfort', // Default for now
+            crisis_indicators: [],
+            progress_indicators: [],
+            context: 'sharing', // Default for now
+            emotional_complexity: 0.7, // Default for now
+            all_emotions: {} // Default for now
         };
     }
 }

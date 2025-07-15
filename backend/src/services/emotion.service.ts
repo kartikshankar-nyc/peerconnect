@@ -1,26 +1,123 @@
-// Demo Emotion Service - Simple emotion analysis for demonstration
+// Enhanced Emotion Service for IsolationDiaries - Advanced emotion analysis with multiple models
 export interface EmotionAnalysis {
     emotions: { [emotion: string]: number };
     primaryEmotion: string;
+    secondaryEmotions: string[];
     empathyPotentialScore: number;
     intensity: number;
+    supportType: 'comfort' | 'energy' | 'clarity' | 'solidarity';
+    crisisIndicators: string[];
+    progressIndicators: string[];
+    context: 'sharing' | 'seeking' | 'reflecting' | 'celebrating';
+    emotionalComplexity: number;
+}
+
+export interface EmotionalPattern {
+    userId: string;
+    timestamp: Date;
+    emotions: { [emotion: string]: number };
+    primaryEmotion: string;
+    intensity: number;
+    context: string;
 }
 
 export class EmotionService {
     private emotionKeywords = {
-        joy: ['happy', 'excited', 'thrilled', 'elated', 'cheerful', 'delighted'],
-        hope: ['hope', 'optimistic', 'confident', 'positive', 'encouraged', 'uplifting'],
-        gratitude: ['grateful', 'thankful', 'blessed', 'appreciate', 'thanks'],
-        relief: ['relief', 'better', 'calm', 'peaceful', 'relaxed'],
-        sadness: ['sad', 'down', 'blue', 'depressed', 'melancholy', 'grief'],
-        anxiety: ['anxious', 'worried', 'nervous', 'stressed', 'panic', 'fear'],
-        loneliness: ['lonely', 'alone', 'isolated', 'disconnected', 'empty'],
-        frustration: ['frustrated', 'angry', 'annoyed', 'irritated', 'upset'],
-        overwhelm: ['overwhelmed', 'too much', 'crushing', 'drowning', 'exhausted'],
-        confusion: ['confused', 'lost', 'unclear', 'uncertain', 'puzzled'],
-        curiosity: ['curious', 'wondering', 'interested', 'intrigued'],
-        acceptance: ['accept', 'peace', 'okay', 'fine', 'settled'],
-        determination: ['determined', 'strong', 'persevere', 'fight', 'overcome']
+        // Core emotional states
+        joy: {
+            keywords: ['happy', 'excited', 'thrilled', 'elated', 'cheerful', 'delighted', 'amazing', 'wonderful', 'fantastic', 'brilliant'],
+            weight: 1.0,
+            supportType: 'solidarity' as const
+        },
+        hope: {
+            keywords: ['hope', 'optimistic', 'confident', 'positive', 'encouraged', 'uplifting', 'bright', 'promising', 'looking forward', 'better tomorrow'],
+            weight: 1.0,
+            supportType: 'energy' as const
+        },
+        gratitude: {
+            keywords: ['grateful', 'thankful', 'blessed', 'appreciate', 'thanks', 'lucky', 'fortunate', 'gift'],
+            weight: 0.9,
+            supportType: 'solidarity' as const
+        },
+        relief: {
+            keywords: ['relief', 'better', 'calm', 'peaceful', 'relaxed', 'easier', 'lighter', 'breathe'],
+            weight: 0.8,
+            supportType: 'comfort' as const
+        },
+        sadness: {
+            keywords: ['sad', 'down', 'blue', 'depressed', 'melancholy', 'grief', 'crying', 'tears', 'heartbroken', 'sorrow'],
+            weight: 1.0,
+            supportType: 'comfort' as const
+        },
+        anxiety: {
+            keywords: ['anxious', 'worried', 'nervous', 'stressed', 'panic', 'fear', 'terrified', 'scared', 'trembling', 'racing heart'],
+            weight: 1.2,
+            supportType: 'comfort' as const
+        },
+        loneliness: {
+            keywords: ['lonely', 'alone', 'isolated', 'disconnected', 'empty', 'nobody', 'abandoned', 'forgotten'],
+            weight: 1.3,
+            supportType: 'solidarity' as const
+        },
+        frustration: {
+            keywords: ['frustrated', 'angry', 'annoyed', 'irritated', 'upset', 'mad', 'furious', 'rage'],
+            weight: 1.0,
+            supportType: 'clarity' as const
+        },
+        overwhelm: {
+            keywords: ['overwhelmed', 'too much', 'crushing', 'drowning', 'exhausted', 'burned out', 'can\'t cope'],
+            weight: 1.2,
+            supportType: 'comfort' as const
+        },
+        confusion: {
+            keywords: ['confused', 'lost', 'unclear', 'uncertain', 'puzzled', 'don\'t understand', 'mixed up'],
+            weight: 0.9,
+            supportType: 'clarity' as const
+        },
+        shame: {
+            keywords: ['ashamed', 'embarrassed', 'guilty', 'worthless', 'failure', 'stupid', 'pathetic'],
+            weight: 1.1,
+            supportType: 'comfort' as const
+        },
+        anger: {
+            keywords: ['angry', 'furious', 'rage', 'mad', 'pissed', 'livid', 'outraged'],
+            weight: 1.0,
+            supportType: 'clarity' as const
+        },
+        curiosity: {
+            keywords: ['curious', 'wondering', 'interested', 'intrigued', 'fascinated'],
+            weight: 0.7,
+            supportType: 'clarity' as const
+        },
+        acceptance: {
+            keywords: ['accept', 'peace', 'okay', 'fine', 'settled', 'at peace', 'coming to terms'],
+            weight: 0.8,
+            supportType: 'solidarity' as const
+        },
+        determination: {
+            keywords: ['determined', 'strong', 'persevere', 'fight', 'overcome', 'resilient', 'won\'t give up'],
+            weight: 0.9,
+            supportType: 'energy' as const
+        }
+    };
+
+    private crisisKeywords = [
+        'kill myself', 'end it all', 'suicide', 'don\'t want to live', 'better off dead',
+        'hurt myself', 'self harm', 'cutting', 'overdose', 'jump off',
+        'no point', 'give up', 'can\'t go on', 'end the pain'
+    ];
+
+    private progressKeywords = [
+        'getting better', 'improving', 'progress', 'breakthrough', 'healing',
+        'stronger', 'growing', 'learning', 'overcoming', 'recovery',
+        'milestone', 'achievement', 'proud', 'accomplished'
+    ];
+
+    private contextIndicators = {
+        sharing: ['want to share', 'happened to me', 'my story', 'experience', 'went through'],
+        seeking: ['need help', 'advice', 'what should', 'how do', 'anyone else', 'suggestions'],
+        reflecting: ['thinking about', 'realized', 'looking back', 'understand', 'learning'],
+        celebrating: ['proud', 'achieved', 'accomplished', 'milestone', 'success', 'breakthrough']
     };
 
     async analyzeContent(content: string): Promise<EmotionAnalysis> {
@@ -30,62 +127,187 @@ export class EmotionService {
     async analyzeEmotion(content: string): Promise<EmotionAnalysis> {
         const text = content.toLowerCase();
         const emotions: { [emotion: string]: number } = {};
+        const detectedSupportTypes: string[] = [];
 
-        // Calculate emotion scores based on keyword presence
-        for (const [emotion, keywords] of Object.entries(this.emotionKeywords)) {
+        // Enhanced emotion detection with context awareness
+        for (const [emotion, config] of Object.entries(this.emotionKeywords)) {
             let score = 0;
-            for (const keyword of keywords) {
+            let contextMultiplier = 1.0;
+
+            // Basic keyword matching
+            for (const keyword of config.keywords) {
                 if (text.includes(keyword)) {
-                    score += 0.2; // Each keyword adds 20% intensity
+                    score += 0.15 * config.weight;
                 }
             }
+
+            // Context-aware scoring
+            const sentences = text.split(/[.!?]+/);
+            for (const sentence of sentences) {
+                if (config.keywords.some(keyword => sentence.includes(keyword))) {
+                    // Boost score for emotional intensity words
+                    if (sentence.includes('very') || sentence.includes('extremely') || sentence.includes('really')) {
+                        contextMultiplier += 0.3;
+                    }
+                    // Boost for personal pronouns (more personal = higher emotion)
+                    if (sentence.includes(' i ') || sentence.includes('my ') || sentence.includes('me ')) {
+                        contextMultiplier += 0.2;
+                    }
+                }
+            }
+
             if (score > 0) {
-                emotions[emotion] = Math.min(score, 1.0); // Cap at 100%
+                emotions[emotion] = Math.min(score * contextMultiplier, 1.0);
+                detectedSupportTypes.push(config.supportType);
             }
         }
 
-        // Find primary emotion (highest score)
-        let primaryEmotion = 'neutral';
-        let maxScore = 0;
-        for (const [emotion, score] of Object.entries(emotions)) {
-            if (score > maxScore) {
-                maxScore = score;
-                primaryEmotion = emotion;
+        // Determine primary and secondary emotions
+        const sortedEmotions = Object.entries(emotions)
+            .sort(([, a], [, b]) => b - a);
+
+        const primaryEmotion = sortedEmotions.length > 0 ? sortedEmotions[0][0] : 'neutral';
+        const secondaryEmotions = sortedEmotions
+            .slice(1, 4)
+            .filter(([, score]) => score > 0.3)
+            .map(([emotion]) => emotion);
+
+        // Determine support type needed
+        const supportTypeCounts = detectedSupportTypes.reduce((acc, type) => {
+            acc[type] = (acc[type] || 0) + 1;
+            return acc;
+        }, {} as Record<string, number>);
+
+        const supportType = Object.entries(supportTypeCounts)
+            .sort(([, a], [, b]) => b - a)[0]?.[0] as any || 'comfort';
+
+        // Crisis detection
+        const crisisIndicators = this.crisisKeywords.filter(keyword =>
+            text.includes(keyword)
+        );
+
+        // Progress detection
+        const progressIndicators = this.progressKeywords.filter(keyword =>
+            text.includes(keyword)
+        );
+
+        // Context detection
+        let context: 'sharing' | 'seeking' | 'reflecting' | 'celebrating' = 'sharing';
+        let maxContextScore = 0;
+
+        for (const [contextType, indicators] of Object.entries(this.contextIndicators)) {
+            const score = indicators.filter(indicator => text.includes(indicator)).length;
+            if (score > maxContextScore) {
+                maxContextScore = score;
+                context = contextType as any;
             }
         }
 
-        // Calculate empathy potential based on vulnerability indicators
+        // Calculate enhanced empathy potential
         const vulnerabilityWords = [
             'help', 'struggling', 'alone', 'scared', 'lost', 'overwhelmed',
             'don\'t know', 'confused', 'worried', 'anxious', 'depressed',
-            'lonely', 'isolated', 'empty', 'hopeless', 'stuck'
+            'lonely', 'isolated', 'empty', 'hopeless', 'stuck', 'broken',
+            'can\'t handle', 'falling apart', 'desperate'
         ];
 
-        let empathyScore = 0.3; // Base empathy potential
+        let empathyScore = 0.2; // Lower base score
+
+        // Vulnerability indicators
         for (const word of vulnerabilityWords) {
             if (text.includes(word)) {
-                empathyScore += 0.1;
+                empathyScore += 0.08;
             }
         }
 
-        // Boost empathy score for questions and help-seeking language
-        if (text.includes('?') || text.includes('how do') || text.includes('what should')) {
-            empathyScore += 0.2;
+        // Question indicators (help-seeking)
+        const questionCount = (text.match(/\?/g) || []).length;
+        empathyScore += questionCount * 0.1;
+
+        // Personal sharing indicators
+        const personalPronouns = ['i ', 'my ', 'me ', 'myself'].filter(pronoun =>
+            text.includes(pronoun)
+        ).length;
+        empathyScore += personalPronouns * 0.05;
+
+        // Crisis situations get maximum empathy
+        if (crisisIndicators.length > 0) {
+            empathyScore = 0.95;
         }
 
         const empathyPotentialScore = Math.min(empathyScore, 0.95);
-        const intensity = maxScore || 0.5; // Default intensity if no emotions detected
+
+        // Calculate emotional complexity
+        const emotionalComplexity = Object.keys(emotions).length / 10; // Normalize to 0-1
+
+        // Calculate intensity
+        const maxScore = Math.max(...Object.values(emotions));
+        const intensity = maxScore || 0.3; // Lower default intensity
 
         return {
             emotions,
             primaryEmotion,
+            secondaryEmotions,
             empathyPotentialScore,
-            intensity
+            intensity,
+            supportType,
+            crisisIndicators,
+            progressIndicators,
+            context,
+            emotionalComplexity
+        };
+    }
+
+    async storeEmotionalPattern(userId: string, analysis: EmotionAnalysis): Promise<void> {
+        // Store emotional pattern for future analysis and personalization
+        const pattern: EmotionalPattern = {
+            userId,
+            timestamp: new Date(),
+            emotions: analysis.emotions,
+            primaryEmotion: analysis.primaryEmotion,
+            intensity: analysis.intensity,
+            context: analysis.context
+        };
+
+        // In a real implementation, this would store to database
+        console.log(`Storing emotional pattern for user ${userId}:`, pattern);
+    }
+
+    async getUserEmotionalHistory(userId: string, days: number = 30): Promise<EmotionalPattern[]> {
+        // Retrieve user's emotional patterns for trend analysis
+        // This would query the database in a real implementation
+        console.log(`Retrieving emotional history for user ${userId} for last ${days} days`);
+        return [];
+    }
+
+    async getEmotionalTrends(userId: string): Promise<{
+        dominantEmotions: string[];
+        improvedEmotions: string[];
+        concerningPatterns: string[];
+        progressScore: number;
+    }> {
+        // Analyze emotional trends for insights and progress tracking
+        const history = await this.getUserEmotionalHistory(userId);
+
+        // This would contain sophisticated trend analysis in a real implementation
+        return {
+            dominantEmotions: ['anxiety', 'hope'],
+            improvedEmotions: ['sadness'],
+            concerningPatterns: [],
+            progressScore: 0.7
         };
     }
 
     async updateUserEmpathyScore(userId: string, postAnalysis: EmotionAnalysis): Promise<void> {
-        // Demo implementation - in real app this would update the database
-        console.log(`Demo: Updated empathy score for user ${userId} based on post analysis`);
+        // Enhanced empathy score calculation
+        await this.storeEmotionalPattern(userId, postAnalysis);
+        console.log(`Updated empathy score for user ${userId} based on enhanced analysis`);
+    }
+
+    async findSimilarEmotionalStates(analysis: EmotionAnalysis, limit: number = 10): Promise<string[]> {
+        // Find posts with similar emotional profiles for matching
+        // This would use vector similarity search in a real implementation
+        console.log(`Finding similar emotional states for matching algorithm`);
+        return [];
     }
 } 

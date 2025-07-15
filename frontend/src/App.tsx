@@ -7,6 +7,7 @@ import Feed from './pages/Feed';
 import CreatePost from './pages/CreatePost';
 import Community from './pages/Community';
 import Profile from './pages/Profile';
+import Diary from './pages/Diary';
 
 function App() {
     // Use basename for GitHub Pages deployment
@@ -23,6 +24,7 @@ function App() {
                             <Route path="/create" element={<CreatePost />} />
                             <Route path="/community/:id" element={<Community />} />
                             <Route path="/profile" element={<Profile />} />
+                            <Route path="/diary" element={<Diary />} />
                         </Routes>
                     </Layout>
                 </div>
