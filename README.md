@@ -6,6 +6,24 @@
 
 To create a safe, anonymous space where people can express their mental state freely and discover shared experiences, fostering healing through connection and relatability.
 
+## 📸 Screenshots
+
+### Home Dashboard
+![Home Page](screenshots/home-page.png)
+*The main dashboard showcasing anonymous authentication and key platform features*
+
+### Community Feed
+![Feed Page](screenshots/feed-page.png)
+*Interactive feed displaying posts with advanced AI emotion analysis and community engagement*
+
+### Private Diary Mode
+![Diary Page](screenshots/diary-page.png)
+*Personal reflection space with emotion tracking, trends visualization, and optional sharing*
+
+### Emotion-Aware Post Creation
+![Create Post](screenshots/create-post.png)
+*Intelligent post creation interface with real-time emotion analysis and content guidance*
+
 ## 🔥 Live Features
 
 ### ✅ **Core Platform (Phase 1 Complete)**
