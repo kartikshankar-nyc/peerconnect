@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     HeartIcon,
     ChatBubbleOvalLeftIcon,
@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/solid';
 import { Post } from '../services/apiService'
 import { ExclamationTriangleIcon, TrophyIcon } from '@heroicons/react/24/outline';
+import HugAnimation from './HugAnimation';
 
 interface PostCardProps {
     post: Post
@@ -25,6 +26,10 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [showShareConfirmation, setShowShareConfirmation] = useState(false);
+    const [showHugAnimation, setShowHugAnimation] = useState(false);
+    const [hugTriggerPosition, setHugTriggerPosition] = useState({ x: 0, y: 0 });
+    const [reactionCount, setReactionCount] = useState(post.reactions || 0);
+    const heartButtonRef = useRef<HTMLButtonElement>(null);
 
     const getEmpathyLevel = (score: number) => {
         if (score >= 0.9) return { level: 'very-high', label: 'Hope Thread', color: 'text-amber-700 bg-amber-100 border-amber-200' };
@@ -135,6 +140,38 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
             document.body.removeChild(textArea);
             setShowShareConfirmation(true);
             setTimeout(() => setShowShareConfirmation(false), 2000);
+        }
+    };
+
+    const handleHeartClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!isLiked && heartButtonRef.current) {
+            // Get button position for animation trigger
+            const rect = heartButtonRef.current.getBoundingClientRect();
+            setHugTriggerPosition({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            });
+            setShowHugAnimation(true);
+        } else {
+            // If already liked, just toggle immediately
+            setIsLiked(!isLiked);
+            setReactionCount(prev => isLiked ? prev - 1 : prev + 1);
+        }
+    };
+
+    const handleHugAnimationComplete = () => {
+        if (!showHugAnimation) return; // Prevent multiple calls
+
+        setIsLiked(true);
+        setShowHugAnimation(false);
+        setReactionCount(prev => prev + 1);
+
+        // Add subtle haptic feedback if supported
+        if ('vibrate' in navigator) {
+            navigator.vibrate(50); // Gentle 50ms vibration
         }
     };
 
@@ -351,7 +388,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                 <div className="flex items-center space-x-4">
                     {/* Like Button */}
                     <button
-                        onClick={() => setIsLiked(!isLiked)}
+                        type="button"
+                        ref={heartButtonRef}
+                        onClick={handleHeartClick}
                         className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${isLiked
                             ? 'bg-red-50 text-red-600 hover:bg-red-100'
                             : 'text-slate-600 hover:bg-slate-50 hover:text-red-600'
@@ -364,7 +403,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                         )}
                         <span>Support</span>
                         <span className="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-md">
-                            {post.reactions || 0}
+                            {reactionCount}
                         </span>
                     </button>
 
@@ -397,6 +436,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
                     )}
                 </div>
             </footer>
+
+            {/* Hug Animation */}
+            <HugAnimation
+                key={`hug-${post.id}`}
+                isActive={showHugAnimation}
+                onComplete={handleHugAnimationComplete}
+                triggerPosition={hugTriggerPosition}
+            />
         </article>
     );
 };
