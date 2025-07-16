@@ -1,4 +1,4 @@
-# IsolationDiaries (formerly PeerNexus)
+# PeerConnect
 
 **A safe, anonymous mental health support platform where people can express their emotional state freely and discover shared experiences, fostering healing through connection and relatability.**
 
