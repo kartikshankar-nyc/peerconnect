@@ -113,7 +113,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onCommunityFilter, communityN
     };
 
     const handleShare = async () => {
-        const shareText = `"${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}" - Shared from PeerNexus Community\n\nJoin the conversation at ${window.location.origin}`;
+        const shareText = `"${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}" - Shared from PeerConnect Community\n\nJoin the conversation at ${window.location.origin}`;
 
         try {
             if (navigator.share) {

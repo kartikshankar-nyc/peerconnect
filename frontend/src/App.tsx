@@ -11,7 +11,7 @@ import Diary from './pages/Diary';
 
 function App() {
     // Use basename for GitHub Pages deployment
-    const basename = process.env.NODE_ENV === 'production' ? '/peernexus' : '';
+    const basename = process.env.NODE_ENV === 'production' ? '/peerconnect' : '';
 
     return (
         <AuthProvider>

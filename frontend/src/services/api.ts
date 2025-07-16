@@ -130,7 +130,7 @@ api.interceptors.response.use(
         // Handle common errors
         if (error.response?.status === 401) {
             // Handle unauthorized
-            localStorage.removeItem('peernexus_user_id')
+            localStorage.removeItem('peerconnect_user_id')
             window.location.href = '/'
         }
 

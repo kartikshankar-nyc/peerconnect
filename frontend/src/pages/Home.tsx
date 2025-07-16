@@ -545,7 +545,7 @@ const Home: React.FC = () => {
                             Ready to Begin Your Healing Journey?
                         </h2>
                         <p className="text-body-lg mb-12 opacity-90">
-                            Join thousands who have found support, hope, and community through PeerNexus.
+                            Join thousands who have found support, hope, and community through PeerConnect.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <button

@@ -31,7 +31,7 @@ export const createAnonymousUser = createAsyncThunk(
             const response = await api.post('/users/anonymous')
             const user = response.data.data
             // Store user ID in localStorage for persistence
-            localStorage.setItem('peernexus_user_id', user.id)
+            localStorage.setItem('peerconnect_user_id', user.id)
             return user
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.error || 'Failed to create user')
@@ -43,14 +43,14 @@ export const checkUser = createAsyncThunk(
     'auth/checkUser',
     async (_, { rejectWithValue }) => {
         try {
-            const userId = localStorage.getItem('peernexus_user_id')
+            const userId = localStorage.getItem('peerconnect_user_id')
             if (!userId) return null
 
             const response = await api.get(`/users/${userId}`)
             return response.data.data
         } catch (error: any) {
             // If user not found, clear localStorage
-            localStorage.removeItem('peernexus_user_id')
+            localStorage.removeItem('peerconnect_user_id')
             return null
         }
     }
@@ -77,7 +77,7 @@ const authSlice = createSlice({
         },
         logout: (state) => {
             state.user = null
-            localStorage.removeItem('peernexus_user_id')
+            localStorage.removeItem('peerconnect_user_id')
         },
     },
     extraReducers: (builder) => {

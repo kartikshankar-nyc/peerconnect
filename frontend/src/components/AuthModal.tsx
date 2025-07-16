@@ -92,16 +92,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                                 <SparklesIcon className="w-8 h-8 text-white" />
                             </div>
 
-                            <h2 className="text-3xl font-bold text-center text-slate-900 mb-2">
-                                {mode === 'login' ? 'Welcome Back' : mode === 'signup' ? 'Join PeerNexus' : 'Start Anonymous Session'}
+                            <h2 className="text-heading-lg font-bold text-neutral-900 mb-2">
+                                {mode === 'login' ? 'Welcome Back' : mode === 'signup' ? 'Join PeerConnect' : 'Start Anonymous Session'}
                             </h2>
-
-                            <p className="text-center text-slate-600 text-sm">
+                            <p className="text-body-sm text-neutral-600 mb-6">
                                 {mode === 'login'
-                                    ? 'Continue your journey of connection and support'
+                                    ? 'Sign in to continue your journey of connection and support.'
                                     : mode === 'signup'
-                                        ? 'Start your anonymous journey to healing and hope'
-                                        : 'Begin your anonymous journey to explore PeerNexus without revealing your identity.'
+                                        ? 'Create your account to join a community that understands.'
+                                        : 'Begin your anonymous journey to explore PeerConnect without revealing your identity.'
                                 }
                             </p>
                         </div>

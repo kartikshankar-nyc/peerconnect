@@ -18,11 +18,11 @@ const DemoBanner: React.FC = () => {
                         </div>
                         <span className="hidden sm:inline text-white/90">•</span>
                         <p className="text-sm font-medium text-white/90">
-                            You're exploring PeerNexus with simulated data.
+                            You're exploring PeerConnect with simulated data.
                             <span className="hidden md:inline ml-1">All features are functional but data isn't persistent.</span>
                         </p>
                         <a
-                            href="https://github.com/kartikshankar/peernexus"
+                            href="https://github.com/kartikshankar-nyc/peerconnect"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hidden sm:inline-flex items-center text-yellow-200 hover:text-yellow-100 font-medium underline underline-offset-2 ml-3 transition-colors duration-200"
