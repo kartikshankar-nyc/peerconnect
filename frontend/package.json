@@ -1,7 +1,7 @@
 {
-    "name": "peernexus-frontend",
+    "name": "peerconnect-frontend",
     "version": "1.0.0",
-    "description": "Frontend for PeerNexus",
+    "description": "Frontend for PeerConnect",
     "type": "module",
     "private": true,
     "scripts": {

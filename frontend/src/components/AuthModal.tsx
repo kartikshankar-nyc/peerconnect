@@ -184,7 +184,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                                         <ShieldCheckIcon className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                                         <h3 className="text-lg font-semibold text-slate-900 mb-2">Anonymous Session</h3>
                                         <p className="text-sm text-slate-600 mb-4">
-                                            Start exploring IsolationDiaries without sharing any personal information.
+                                            Start exploring PeerConnect without sharing any personal information.
                                             Your privacy is completely protected.
                                         </p>
                                         <div className="flex items-center justify-center space-x-2 text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2">

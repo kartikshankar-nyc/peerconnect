@@ -58,13 +58,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     useEffect(() => {
         // Check for stored auth on mount
-        const storedAuth = localStorage.getItem('isolation_diaries_auth');
+        const storedAuth = localStorage.getItem('peerconnect_auth');
         if (storedAuth) {
             try {
                 const userData = JSON.parse(storedAuth);
                 setUser(userData);
             } catch (error) {
-                localStorage.removeItem('isolation_diaries_auth');
+                localStorage.removeItem('peerconnect_auth');
             }
         }
         setIsLoading(false);
@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         setUser(anonymousUser);
-        localStorage.setItem('isolation_diaries_auth', JSON.stringify(anonymousUser));
+        localStorage.setItem('peerconnect_auth', JSON.stringify(anonymousUser));
         setIsLoading(false);
     };
 
@@ -109,7 +109,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         setUser(registeredUser);
-        localStorage.setItem('isolation_diaries_auth', JSON.stringify(registeredUser));
+        localStorage.setItem('peerconnect_auth', JSON.stringify(registeredUser));
         setIsLoading(false);
     };
 
@@ -131,7 +131,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         setUser(registeredUser);
-        localStorage.setItem('isolation_diaries_auth', JSON.stringify(registeredUser));
+        localStorage.setItem('peerconnect_auth', JSON.stringify(registeredUser));
         setIsLoading(false);
     };
 
@@ -155,7 +155,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         setUser(convertedUser);
-        localStorage.setItem('isolation_diaries_auth', JSON.stringify(convertedUser));
+        localStorage.setItem('peerconnect_auth', JSON.stringify(convertedUser));
         setIsLoading(false);
     };
 
@@ -174,12 +174,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         setUser(updatedUser);
-        localStorage.setItem('isolation_diaries_auth', JSON.stringify(updatedUser));
+        localStorage.setItem('peerconnect_auth', JSON.stringify(updatedUser));
     };
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem('isolation_diaries_auth');
+        localStorage.removeItem('peerconnect_auth');
     };
 
     const value: AuthContextType = {

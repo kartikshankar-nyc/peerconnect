@@ -4,7 +4,7 @@ To create a safe, anonymous space where people can express their mental state fr
 
 ## Vision:
 
-A world where no one feels alone in their struggle. IsolationDiaries empowers individuals to find hope, insight, and solidarity through real, human stories.
+A world where no one feels alone in their struggle. PeerConnect empowers individuals to find hope, insight, and solidarity through real, human stories.
 
 ## North Stars:
 

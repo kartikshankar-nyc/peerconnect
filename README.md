@@ -147,8 +147,8 @@ To create a safe, anonymous space where people can express their mental state fr
 ### **Quick Start**
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/isolation-diaries.git
-cd isolation-diaries
+git clone https://github.com/your-username/peerconnect.git
+cd peerconnect
 
 # Install dependencies for both frontend and backend
 npm run setup
@@ -224,4 +224,4 @@ If you or someone you know is in crisis, please reach out for help immediately:
 
 ---
 
-*IsolationDiaries is committed to creating a world where no one feels alone in their struggle. Through safe, anonymous connection and AI-powered emotional support, we're building a community that truly understands and helps heal.*
+*PeerConnect is committed to creating a world where no one feels alone in their struggle. Through safe, anonymous connection and AI-powered emotional support, we're building a community that truly understands and helps heal.*

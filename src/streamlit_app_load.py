@@ -1,4 +1,4 @@
-﻿# ---------- IsolationDiaries Streamlit App ---------------
+﻿# ---------- PeerConnect Streamlit App ---------------
 # Run: streamlit run app.py [-- --embed {sts|ollama}]
 #
 # Requires:
@@ -128,8 +128,8 @@ else:  # Ollama embedding backend
 
 
 # ---------- UI ------------------------------------------
-st.set_page_config(page_title="Isolation Diaries", layout="centered")
-st.title("📝 Isolation Diaries")
+st.set_page_config(page_title="PeerConnect", layout="centered")
+st.title("📝 PeerConnect")
 st.caption(f"Embedding backend: **{EMBED_BACKEND}**")
 
 with st.form("diary_form"):

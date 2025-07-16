@@ -1,10 +1,10 @@
-# IsolationDiaries - Product Requirements Document
+# PeerConnect - Product Requirements Document
 
 ## Mission
 To create a safe, anonymous space where people can express their mental state freely and discover shared experiences, fostering healing through connection and relatability.
 
 ## Vision
-A world where no one feels alone in their struggle. IsolationDiaries empowers individuals to find hope, insight, and solidarity through real, human stories.
+A world where no one feels alone in their struggle. PeerConnect empowers individuals to find hope, insight, and solidarity through real, human stories.
 
 ## North Star Principles
 
@@ -263,6 +263,6 @@ A world where no one feels alone in their struggle. IsolationDiaries empowers in
 
 ## Conclusion
 
-IsolationDiaries represents a revolutionary approach to mental health support through technology. By prioritizing emotional safety, intelligent matching, and anonymous community building, we can create a platform that genuinely helps people feel less alone in their struggles while maintaining the highest standards of privacy and safety.
+PeerConnect represents a revolutionary approach to mental health support through technology. By prioritizing emotional safety, intelligent matching, and anonymous community building, we can create a platform that genuinely helps people feel less alone in their struggles while maintaining the highest standards of privacy and safety.
 
 The success of this platform will be measured not just in user engagement metrics, but in the real emotional healing and human connection it facilitates. Every feature and decision should be evaluated through the lens of our core mission: creating a safe space where people can express themselves freely and find solidarity in shared human experiences. 

@@ -1,4 +1,4 @@
-// Enhanced Emotion Service for IsolationDiaries - Advanced emotion analysis with multiple models
+// Enhanced Emotion Service for PeerConnect - Advanced emotion analysis with multiple models
 export interface EmotionAnalysis {
     emotions: { [emotion: string]: number };
     primaryEmotion: string;

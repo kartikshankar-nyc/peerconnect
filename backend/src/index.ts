@@ -14,7 +14,7 @@ app.get('/health', (req, res) => {
     res.json({
         status: 'healthy',
         mode: 'demo',
-        message: 'PeerNexus Demo API is running'
+        message: 'PeerConnect Demo API is running'
     });
 });
 
@@ -116,7 +116,7 @@ app.use('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 PeerNexus API running on port ${PORT}`);
+    console.log(`🚀 PeerConnect API running on port ${PORT}`);
     console.log(`📱 Frontend should connect to: http://localhost:${PORT}`);
     console.log(`🎭 Demo endpoints available at:`);
     console.log(`   - Communities: http://localhost:${PORT}/api/communities`);

@@ -1,7 +1,7 @@
 {
-    "name": "peernexus",
+    "name": "peerconnect",
     "version": "1.0.0",
-    "description": "AI-powered anonymous social media platform for people experiencing isolation",
+    "description": "AI-powered anonymous mental health support platform fostering connection and relatability",
     "main": "index.js",
     "scripts": {
         "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",

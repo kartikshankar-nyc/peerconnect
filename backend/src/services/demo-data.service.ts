@@ -1,4 +1,4 @@
-// Demo Data Service - Provides synthetic data for IsolationDiaries demo
+// Demo Data Service - Provides synthetic data for PeerConnect demo
 export interface DemoUser {
     id: string;
     anonymous_id: string;
