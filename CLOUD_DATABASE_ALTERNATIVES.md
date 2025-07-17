@@ -1,25 +1,14 @@
-# 🚀 Cloud Database Alternatives to Supabase
+# 🌩️ Cloud Database Alternatives for PeerConnect
 
-Since your Supabase has expired, here are excellent alternatives on GCP and AWS that work perfectly with PeerNexus:
+Since your Supabase has expired, here are excellent alternatives on GCP and AWS that work perfectly with PeerConnect:
 
-## 🥇 **Recommended: Google Cloud SQL (PostgreSQL)**
+## 🥇 **RECOMMENDED: Google Cloud SQL PostgreSQL**
 
-### **Why Google Cloud SQL?**
-- ✅ **PostgreSQL Compatible**: Drop-in replacement for Supabase
-- ✅ **Auto-scaling**: Handles millions of users
-- ✅ **Cost-effective**: Pay-as-you-use pricing
-- ✅ **High availability**: 99.95% uptime SLA
-- ✅ **Easy setup**: 5-minute configuration
+### ⚡ Quick Setup (5 minutes):
 
-### **Setup Instructions**
-
-#### 1. Create Cloud SQL Instance
 ```bash
-# Install gcloud CLI if not already installed
-# Visit: https://cloud.google.com/sdk/docs/install
-
 # Create PostgreSQL instance
-gcloud sql instances create peernexus-db \
+gcloud sql instances create peerconnect-db \
   --database-version=POSTGRES_15 \
   --tier=db-f1-micro \
   --region=us-central1 \
@@ -28,27 +17,23 @@ gcloud sql instances create peernexus-db \
   --authorized-networks=0.0.0.0/0
 
 # Create database
-gcloud sql databases create peernexus --instance=peernexus-db
+gcloud sql databases create peerconnect --instance=peerconnect-db
 
 # Create user
-gcloud sql users create peernexus-user \
-  --instance=peernexus-db \
+gcloud sql users create peerconnect-user \
+  --instance=peerconnect-db \
   --password=your-secure-password
-```
-
-#### 2. Get Connection Details
-```bash
-# Get connection name
-gcloud sql instances describe peernexus-db --format="value(connectionName)"
 
 # Get public IP
-gcloud sql instances describe peernexus-db --format="value(ipAddresses[0].ipAddress)"
+gcloud sql instances describe peerconnect-db --format="value(connectionName)"
+
+# Get public IP address
+gcloud sql instances describe peerconnect-db --format="value(ipAddresses[0].ipAddress)"
 ```
 
-#### 3. Update Backend Configuration
+**Update backend/.env:**
 ```env
-# backend/.env
-DATABASE_URL="postgresql://peernexus-user:your-secure-password@PUBLIC_IP:5432/peernexus"
+DATABASE_URL="postgresql://peerconnect-user:your-secure-password@PUBLIC_IP:5432/peerconnect"
 ```
 
 ### **Cost Estimate**
@@ -215,7 +200,7 @@ export const db = admin.firestore();
 
 ## 🎯 **My Recommendation**
 
-For PeerNexus, I recommend **Google Cloud SQL PostgreSQL** because:
+For PeerConnect, I recommend **Google Cloud SQL PostgreSQL** because:
 
 1. **Drop-in replacement**: No code changes needed
 2. **Cost-effective**: Starting at $7/month

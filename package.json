@@ -31,7 +31,7 @@
         "ai",
         "emotion-detection"
     ],
-    "author": "PeerNexus Team",
+    "author": "PeerConnect Team",
     "license": "MIT",
     "devDependencies": {
         "concurrently": "^8.2.2"

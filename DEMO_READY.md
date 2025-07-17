@@ -1,4 +1,4 @@
-# 🎉 PeerNexus Demo is LIVE! (FIXED & READY)
+# 🎉 PeerConnect Demo is LIVE! (FIXED & READY)
 
 ## ✅ **ISSUE RESOLVED - Demo Fully Working**
 
@@ -154,6 +154,6 @@ This demo shows a **production-ready MVP** that can:
 ✅ **Redux Issues**: Completely resolved  
 ✅ **Ready to Demo**: 100% functional
 
-**PeerNexus: Where isolation ends and community begins.** 💜
+**PeerConnect: Where isolation ends and community begins.** 💜
 
 **Go ahead and explore your fully functional social media platform for isolated individuals!** 🚀 

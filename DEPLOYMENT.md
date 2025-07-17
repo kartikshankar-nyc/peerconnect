@@ -81,7 +81,7 @@ pm2 start ecosystem.config.js
 
 ### Backend (.env)
 ```env
-DATABASE_URL="postgresql://username:password@localhost:5432/peernexus"
+DATABASE_URL="postgresql://username:password@localhost:5432/peerconnect"
 PORT=3001
 NODE_ENV=production
 JWT_SECRET="your-secret-key"

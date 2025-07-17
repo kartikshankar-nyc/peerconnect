@@ -10,6 +10,14 @@ export interface DemoEmotion {
     secondary: string[];
     intensity: number;
     empathy_potential: number;
+    support_type: 'comfort' | 'energy' | 'clarity' | 'solidarity';
+    crisis_indicators: string[];
+    progress_indicators: string[];
+    context: 'sharing' | 'seeking' | 'reflecting' | 'celebrating';
+    emotional_complexity: number;
+    all_emotions: {
+        [emotion: string]: number;
+    };
 }
 export interface DemoPost {
     id: string;

@@ -1,4 +1,4 @@
-# PeerNexus Setup Guide
+# PeerConnect Setup Guide
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd peernexus
+cd peerconnect
 
 # Install all dependencies
 npm run setup

@@ -1,15 +1,51 @@
 #!/bin/bash
+# PeerConnect Database Setup Script
+echo "🚀 PeerConnect Database Setup"
 
-# PeerNexus Database Setup Script
-echo "🚀 PeerNexus Database Setup"
-echo "=========================="
-
-# Check if .env exists
-if [ ! -f "backend/.env" ]; then
-    echo "📝 Creating .env file from template..."
-    cp backend/env.example backend/.env
-    echo "✅ Created backend/.env - Please update with your database credentials"
+# Check if gcloud is installed
+if ! command -v gcloud &> /dev/null; then
+    echo "❌ Google Cloud CLI not found"
+    echo "📦 Install with: brew install --cask google-cloud-sdk"
+    exit 1
 fi
+
+echo "✅ Google Cloud CLI found"
+
+# Check authentication
+if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q .; then
+    echo "🔐 Please authenticate with Google Cloud"
+    echo "🔑 Run: gcloud auth login"
+    exit 1
+fi
+
+echo "✅ Authenticated with Google Cloud"
+
+# Display setup commands
+echo ""
+echo "📋 Copy and run these commands:"
+echo ""
+echo "1. 🗄️  Create database instance:"
+echo "   gcloud sql instances create peerconnect-db \\"
+echo "     --database-version=POSTGRES_15 \\"
+echo "     --tier=db-f1-micro \\"
+echo "     --region=us-central1 \\"
+echo "     --storage-type=SSD \\"
+echo "     --storage-size=10GB \\"
+echo "     --authorized-networks=0.0.0.0/0"
+echo ""
+echo "2. 📊 Create database:"
+echo "   gcloud sql databases create peerconnect --instance=peerconnect-db"
+echo ""
+echo "3. 👤 Create user:"
+echo "   gcloud sql users create peerconnect-user \\"
+echo "     --instance=peerconnect-db \\"
+echo "     --password=your-secure-password"
+echo ""
+echo "4. 🌐 Get IP address:"
+echo "   gcloud sql instances describe peerconnect-db --format=\"value(ipAddresses[0].ipAddress)\""
+echo ""
+echo "5. ⚙️  Update backend/.env:"
+echo "   DATABASE_URL=\"postgresql://peerconnect-user:your-password@IP:5432/peerconnect\""
 
 echo ""
 echo "Choose your database provider:"
@@ -81,7 +117,7 @@ case $choice in
         echo ""
         echo "Update backend/.env with:"
         echo "DB_PROVIDER=\"postgresql\""
-        echo "DATABASE_URL=\"postgresql://username:password@localhost:5432/peernexus\""
+        echo "DATABASE_URL=\"postgresql://username:password@localhost:5432/peerconnect\""
         ;;
     4)
         echo ""

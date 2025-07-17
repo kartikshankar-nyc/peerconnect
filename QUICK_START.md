@@ -1,4 +1,4 @@
-# 🚀 PeerNexus Quick Start with Google Cloud SQL
+# 🚀 PeerConnect Quick Start with Google Cloud SQL
 
 ## ⚡ 5-Minute Setup
 
@@ -22,7 +22,7 @@ gcloud config set project YOUR_PROJECT_ID
 ### 3. Create Database (One Command!)
 ```bash
 # Create PostgreSQL instance (~2 minutes)
-gcloud sql instances create peernexus-db \
+gcloud sql instances create peerconnect-db \
   --database-version=POSTGRES_15 \
   --tier=db-f1-micro \
   --region=us-central1 \
@@ -31,25 +31,25 @@ gcloud sql instances create peernexus-db \
   --authorized-networks=0.0.0.0/0
 
 # Create database
-gcloud sql databases create peernexus --instance=peernexus-db
+gcloud sql databases create peerconnect --instance=peerconnect-db
 
 # Create user (replace with your password)
-gcloud sql users create peernexus-user \
-  --instance=peernexus-db \
+gcloud sql users create peerconnect-user \
+  --instance=peerconnect-db \
   --password=MySecurePassword123
 ```
 
 ### 4. Get Connection Details
 ```bash
 # Get the IP address
-gcloud sql instances describe peernexus-db --format="value(ipAddresses[0].ipAddress)"
+gcloud sql instances describe peerconnect-db --format="value(ipAddresses[0].ipAddress)"
 ```
 
 ### 5. Update Configuration
 Copy the IP address and update `backend/.env`:
 ```env
 DB_PROVIDER="postgresql"
-DATABASE_URL="postgresql://peernexus-user:MySecurePassword123@YOUR_IP:5432/peernexus"
+DATABASE_URL="postgresql://peerconnect-user:MySecurePassword123@YOUR_IP:5432/peerconnect"
 ```
 
 ### 6. Run Database Migration
@@ -58,10 +58,10 @@ DATABASE_URL="postgresql://peernexus-user:MySecurePassword123@YOUR_IP:5432/peern
 brew install postgresql
 
 # Run the migration
-psql -h YOUR_IP -U peernexus-user -d peernexus -f supabase/migrations/001_initial_schema.sql
+psql -h YOUR_IP -U peerconnect-user -d peerconnect -f supabase/migrations/001_initial_schema.sql
 ```
 
-### 7. Start PeerNexus! 🎉
+### 7. Start PeerConnect! 🎉
 ```bash
 npm run dev
 ```
@@ -79,13 +79,13 @@ Visit:
 ### Connection Issues
 ```bash
 # Test connection
-psql -h YOUR_IP -U peernexus-user -d peernexus -c "SELECT version();"
+psql -h YOUR_IP -U peerconnect-user -d peerconnect -c "SELECT version();"
 ```
 
 ### Reset Database
 ```bash
 # Delete and recreate
-gcloud sql instances delete peernexus-db
+gcloud sql instances delete peerconnect-db
 # Then repeat setup steps
 ```
 
@@ -96,4 +96,4 @@ Your database is now:
 - ✅ **Backed up**: Automatic daily backups
 - ✅ **Monitored**: Built-in monitoring and alerts
 
-**You're ready to launch PeerNexus! 🌟** 
+**You're ready to launch PeerConnect! 🌟** 

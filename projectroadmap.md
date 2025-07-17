@@ -1,7 +1,8 @@
-# PeerNexus - Project Roadmap
+# PeerConnect - Project Roadmap
 
-## Project Overview
-PeerNexus is an AI-powered, anonymous social media platform designed to create safe spaces for people experiencing various forms of isolation. The platform uses emotion-aware matching to connect users with relevant content and communities.
+**Mission**: Create AI-powered anonymous mental health support platform
+
+PeerConnect is an AI-powered, anonymous social media platform designed to create safe spaces for people experiencing various forms of isolation. The platform uses emotion-aware matching to connect users with relevant content and communities.
 
 ## Development Phases
 

@@ -1,42 +1,38 @@
-# 🎯 PeerNexus Database Setup - Complete Guide
+# 🎯 PeerConnect Database Setup - Complete Guide
 
-## 🚀 Current Status
-- ✅ **Application**: Fully functional MVP ready
-- ✅ **Database Abstraction**: Multi-provider support implemented
-- ✅ **Migration Scripts**: PostgreSQL schema ready
-- ✅ **Setup Scripts**: Automated database configuration
-- ⚡ **Ready to Deploy**: Choose your database and launch!
+## 🚀 **What You Need to Launch PeerConnect**
 
-## 🥇 **RECOMMENDED: Google Cloud SQL**
+The **fastest and cheapest** way to get PeerConnect running with a production database.
 
-### ✨ Why This is Perfect for PeerNexus:
-- **Drop-in Replacement**: Zero code changes needed
-- **Cost-Effective**: Only $7/month to start
-- **Scales to Millions**: Auto-scaling PostgreSQL
-- **Production Ready**: 99.95% uptime SLA
-- **Easy Setup**: 5-minute configuration
+## ⭐ **RECOMMENDED: Google Cloud SQL PostgreSQL**
 
-### 🚀 Quick Setup Commands:
+### ✨ Why This is Perfect for PeerConnect:
+- ⚡ **5-minute setup** (seriously!)
+- 💰 **$7/month** for unlimited users
+- 🔒 **Enterprise security** 
+- 📈 **Auto-scales** to millions of users
+- 🌐 **Global availability**
+
+### 🎯 **Complete Setup (Copy-Paste Ready!)**
+
 ```bash
-# 1. Install gcloud CLI
-brew install --cask google-cloud-sdk
-
-# 2. Create database instance
-gcloud sql instances create peernexus-db \
+# 1. Create database instance
+gcloud sql instances create peerconnect-db \
   --database-version=POSTGRES_15 \
   --tier=db-f1-micro \
   --region=us-central1 \
+  --storage-type=SSD \
   --storage-size=10GB \
   --authorized-networks=0.0.0.0/0
 
-# 3. Create database and user
-gcloud sql databases create peernexus --instance=peernexus-db
-gcloud sql users create peernexus-user \
-  --instance=peernexus-db \
-  --password=YourSecurePassword123
+# 2. Create database and user
+gcloud sql databases create peerconnect --instance=peerconnect-db
+gcloud sql users create peerconnect-user \
+  --instance=peerconnect-db \
+  --password=MySecurePassword123
 
-# 4. Get IP and update .env
-gcloud sql instances describe peernexus-db --format="value(ipAddresses[0].ipAddress)"
+# 3. Get IP address
+gcloud sql instances describe peerconnect-db --format="value(ipAddresses[0].ipAddress)"
 ```
 
 ### 💰 **Cost Breakdown:**
@@ -106,10 +102,10 @@ cp backend/env.example backend/.env
 brew install postgresql
 
 # Run schema migration
-psql -h YOUR_IP -U peernexus-user -d peernexus -f supabase/migrations/001_initial_schema.sql
+psql -h YOUR_IP -U peerconnect-user -d peerconnect -f supabase/migrations/001_initial_schema.sql
 ```
 
-### 4. **Launch PeerNexus! 🎉**
+### 4. **Launch PeerConnect! 🎉**
 ```bash
 npm run dev
 ```
@@ -151,4 +147,4 @@ Once you choose a database:
 - ✅ Production ready
 - ✅ Scales to millions of users
 
-**Your PeerNexus MVP will be running in under 10 minutes! 🚀** 
+**Your PeerConnect MVP will be running in under 10 minutes! 🚀** 

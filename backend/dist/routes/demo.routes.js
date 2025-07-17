@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const demo_data_service_1 = require("../services/demo-data.service");
 const router = (0, express_1.Router)();
-const demoService = new demo_data_service_1.DemoDataService();
 // Get all communities
 router.get('/communities', (req, res) => {
     try {
-        const communities = demoService.getCommunities();
+        const communities = demo_data_service_1.demoDataService.getCommunities();
         res.json({
             success: true,
             data: communities
@@ -24,7 +23,7 @@ router.get('/communities', (req, res) => {
 router.get('/posts', (req, res) => {
     try {
         const { communityId } = req.query;
-        const posts = demoService.getPosts(communityId);
+        const posts = demo_data_service_1.demoDataService.getPosts(communityId);
         res.json({
             success: true,
             data: posts
@@ -47,7 +46,7 @@ router.post('/posts', (req, res) => {
                 error: 'Content and community ID are required'
             });
         }
-        const newPost = demoService.createPost(content, communityId, userId);
+        const newPost = demo_data_service_1.demoDataService.createPost(content, communityId, userId);
         res.status(201).json({
             success: true,
             data: newPost
@@ -63,7 +62,7 @@ router.post('/posts', (req, res) => {
 // Get users
 router.get('/users', (req, res) => {
     try {
-        const users = demoService.getUsers();
+        const users = demo_data_service_1.demoDataService.getUsers();
         res.json({
             success: true,
             data: users

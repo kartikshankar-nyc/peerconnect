@@ -1,4 +1,4 @@
-# PeerNexus UI/UX Fixes Applied
+# PeerConnect UI/UX Fixes Applied
 
 ## Issues Addressed
 

@@ -16,8 +16,8 @@ class PostService {
             is_anonymous: data.isAnonymous ?? true,
             is_diary: data.isDiary ?? false,
             detected_emotions: emotionAnalysis.emotions,
-            sentiment_score: emotionAnalysis.sentiment,
-            empathy_potential_score: emotionAnalysis.empathyPotential,
+            sentiment_score: emotionAnalysis.intensity,
+            empathy_potential_score: emotionAnalysis.empathyPotentialScore,
         };
         const { data: createdPost, error } = await supabase_1.supabase
             .from('posts')
@@ -102,8 +102,8 @@ class PostService {
             .update({
             content,
             detected_emotions: emotionAnalysis.emotions,
-            sentiment_score: emotionAnalysis.sentiment,
-            empathy_potential_score: emotionAnalysis.empathyPotential,
+            sentiment_score: emotionAnalysis.intensity,
+            empathy_potential_score: emotionAnalysis.empathyPotentialScore,
         })
             .eq('id', id)
             .select()
