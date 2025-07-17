@@ -110,6 +110,22 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     res.status(500).json({ error: 'Internal server error' });
 });
 
+// Root endpoint - helpful info
+app.get('/', (req, res) => {
+    res.json({
+        message: '🤗 Welcome to PeerConnect API!',
+        status: 'running',
+        mode: 'demo',
+        endpoints: {
+            health: '/health',
+            communities: '/api/communities',
+            posts: '/api/posts',
+            users: '/api/users'
+        },
+        frontend: 'http://localhost:3000'
+    });
+});
+
 // 404 handler
 app.use('*', (req, res) => {
     res.status(404).json({ error: 'Endpoint not found' });
