@@ -24,5 +24,8 @@ export default defineConfig({
     build: {
         outDir: 'dist',
         sourcemap: true,
+        // Ensure all public files are copied
+        copyPublicDir: true,
     },
+    publicDir: 'public',
 }) 

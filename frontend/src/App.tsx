@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -9,6 +9,21 @@ import Community from './pages/Community';
 import Profile from './pages/Profile';
 import Diary from './pages/Diary';
 
+function RedirectHandler() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Handle GitHub Pages SPA redirect
+        const redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+            sessionStorage.removeItem('redirect');
+            navigate(redirect, { replace: true });
+        }
+    }, [navigate]);
+
+    return null;
+}
+
 function App() {
     // Use basename for GitHub Pages deployment
     const basename = process.env.NODE_ENV === 'production' ? '/peerconnect' : '';
@@ -16,6 +31,7 @@ function App() {
     return (
         <AuthProvider>
             <Router basename={basename}>
+                <RedirectHandler />
                 <div className="min-h-screen bg-gray-50">
                     <Layout>
                         <Routes>
