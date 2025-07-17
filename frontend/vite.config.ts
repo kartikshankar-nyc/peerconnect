@@ -6,7 +6,7 @@ import path from 'path'
 export default defineConfig({
     plugins: [react()],
     // GitHub Pages deployment requires the repository name as base
-    base: process.env.NODE_ENV === 'production' ? '/peernexus/' : '/',
+    base: process.env.NODE_ENV === 'production' ? '/peerconnect/' : '/',
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),

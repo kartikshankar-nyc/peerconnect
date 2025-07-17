@@ -1,4 +1,4 @@
-name: Deploy PeerNexus to GitHub Pages
+name: Deploy PeerConnect to GitHub Pages
 
 on:
   push:

@@ -1,8 +1,8 @@
-# PeerNexus Deployment Guide
+# PeerConnect Deployment Guide
 
 ## 🚀 Quick Demo Access
 
-**Live Demo:** [https://kartikshankar.github.io/peernexus/](https://kartikshankar.github.io/peernexus/)
+**Live Demo:** [https://kartikshankar-nyc.github.io/peerconnect/](https://kartikshankar-nyc.github.io/peerconnect/)
 
 The frontend is deployed automatically to GitHub Pages whenever code is pushed to the master branch.
 
@@ -11,7 +11,7 @@ The frontend is deployed automatically to GitHub Pages whenever code is pushed t
 ### Option 1: GitHub Pages (Frontend Only - Recommended for Demo)
 
 **Status:** ✅ Configured and Deployed
-- **URL:** https://kartikshankar.github.io/peernexus/
+- **URL:** https://kartikshankar-nyc.github.io/peerconnect/
 - **Features:** Full frontend functionality with demo data
 - **Limitations:** Backend features run in demo mode (no real database)
 
@@ -61,8 +61,8 @@ docker-compose up --build
 **Setup:**
 ```bash
 # Clone and install
-git clone https://github.com/kartikshankar/peernexus.git
-cd peernexus
+git clone https://github.com/kartikshankar-nyc/peerconnect.git
+cd peerconnect
 npm install
 
 # Install dependencies
@@ -121,7 +121,7 @@ Since the demo runs frontend-only on GitHub Pages:
 
 ## 🎯 For Reviewers & Demo Users
 
-The GitHub Pages deployment at **https://kartikshankar.github.io/peernexus/** showcases:
+The GitHub Pages deployment at **https://kartikshankar-nyc.github.io/peerconnect/** showcases:
 
 1. **Complete Frontend Experience** - All pages and components
 2. **Design System** - Custom 8pt grid system with emotion-based colors
@@ -152,9 +152,9 @@ The GitHub Pages deployment at **https://kartikshankar.github.io/peernexus/** sh
 ## 📞 Support
 
 For deployment issues or questions:
-- Check the [Issues](https://github.com/kartikshankar/peernexus/issues) tab
+- Check the [Issues](https://github.com/kartikshankar-nyc/peerconnect/issues) tab
 - Review the main [README.md](./README.md) for development setup
 
 ---
 
-🎉 **Try the live demo now:** [PeerNexus Demo](https://kartikshankar.github.io/peernexus/) 
+🎉 **Try the live demo now:** [PeerConnect Demo](https://kartikshankar-nyc.github.io/peerconnect/) 

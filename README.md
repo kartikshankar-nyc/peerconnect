@@ -147,7 +147,7 @@ To create a safe, anonymous space where people can express their mental state fr
 ### **Quick Start**
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/peerconnect.git
+git clone https://github.com/kartikshankar-nyc/peerconnect.git
 cd peerconnect
 
 # Install dependencies for both frontend and backend
