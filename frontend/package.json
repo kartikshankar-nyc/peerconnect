@@ -8,6 +8,7 @@
         "dev": "vite",
         "build": "vite build",
         "build:check": "tsc && vite build",
+        "build:explicit": "npx vite build",
         "preview": "vite preview",
         "test": "jest",
         "test:watch": "jest --watch",
