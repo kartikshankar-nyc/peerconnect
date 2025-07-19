@@ -5,8 +5,8 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react()],
-    // Cloudflare Pages deployment - use root path
-    base: '/',
+    // GitHub Pages deployment requires the repository name as base
+    base: process.env.NODE_ENV === 'production' ? '/peerconnect/' : '/',
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
