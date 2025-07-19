@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
-    ? 'https://your-backend-domain.com/api'  // Replace with your backend URL
+    ? 'https://peerconnect.kshankar.workers.dev/api'
     : 'http://localhost:3001/api'
 
 export interface User {
